@@ -22,7 +22,7 @@ public class CityController {
 
     @GetMapping(path="/countries")
     public ResponseEntity<ResponseDTO> getCountries(){
-        return new ResponseEntity<>(new ResponseDTO(200, cityService.getCities(), null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDTO(200, cityService.getCitiesByCodeSize(3), null), HttpStatus.OK);
     }
 
     @GetMapping(path="/departments")

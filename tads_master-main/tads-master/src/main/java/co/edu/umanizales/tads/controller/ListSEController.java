@@ -81,11 +81,18 @@ public class ListSEController {
     @PostMapping
     public ResponseEntity<ResponseDTO> addKid(@RequestBody KidDTO kidDTO){
         City city = cityService.getCityByCode(kidDTO.getCodeCity());
+        Boolean addKidDone = listSEService.getKids().addKidDone(new Kid(kidDTO.getIdentification(),
+                kidDTO.getName(), kidDTO.getAge(), kidDTO.getGender(), city));
         if (city == null){
             return new ResponseEntity<>(new ResponseDTO(404, "La ubicación no existe", null), HttpStatus.OK);
         }
-        listSEService.getKids().add(new Kid(kidDTO.getIdentification(), kidDTO.getName(), kidDTO.getAge(), kidDTO.getGender(), city));
-        return new ResponseEntity<>(new ResponseDTO(200, "Se ha adicionado el niño", null), HttpStatus.OK);
+        else if(addKidDone.equals(false)){
+            return new ResponseEntity<>(new ResponseDTO(400, "El elemento ya existe", null), HttpStatus.OK);
+        }
+        else{
+            listSEService.getKids().add(new Kid(kidDTO.getIdentification(), kidDTO.getName(), kidDTO.getAge(), kidDTO.getGender(), city));
+            return new ResponseEntity<>(new ResponseDTO(200, "Se ha adicionado el niño", null), HttpStatus.OK);
+        }
     }
 
     @GetMapping(path = "/kidsbylocations")
@@ -93,6 +100,30 @@ public class ListSEController {
         List<KidsCityDTO> kidsCityDTOList = new ArrayList<>();
         for(City city: cityService.getCities()){
             int count = listSEService.getKids().getCountKidsByCityCode(city.getCode());
+            if(count > 0){
+                kidsCityDTOList.add(new KidsCityDTO(city, count));
+            }
+        }
+        return new ResponseEntity<>(new ResponseDTO(200, kidsCityDTOList, null), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/kidsbydept")
+    public ResponseEntity<ResponseDTO> getKidsByDeptCode(){
+        List<KidsCityDTO> kidsCityDTOList=new ArrayList<>();
+        for(City city: cityService.getCities()){
+            int count = listSEService.getKids().getCountKidsByDeptCode(city.getCode());
+            if(count > 0){
+                kidsCityDTOList.add(new KidsCityDTO(city, count));
+            }
+        }
+        return new ResponseEntity<>(new ResponseDTO(200, kidsCityDTOList, null), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/kidsbymunicipal")
+    public ResponseEntity<ResponseDTO> getKidsByMunicipalCode(){
+        List<KidsCityDTO> kidsCityDTOList=new ArrayList<>();
+        for(City city: cityService.getCities()){
+            int count = listSEService.getKids().getCountKidsByMunicipalCode(city.getCode());
             if(count > 0){
                 kidsCityDTOList.add(new KidsCityDTO(city, count));
             }

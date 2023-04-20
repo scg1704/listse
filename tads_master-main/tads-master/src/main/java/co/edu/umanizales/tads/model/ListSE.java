@@ -128,4 +128,46 @@ public class ListSE {
         }
         return count;
     }
+
+    public int getCountKidsByDeptCode(String code){
+        int count = 0;
+        if (this.head != null){
+            Node temp = this.head;
+            while (temp != null){
+                if(temp.getData().getCity().getCode().substring(0, 5).equals(code)){
+                    count++;
+                }
+                temp = temp.getNext();
+            }
+        }
+        return count;
+    }
+
+    public int getCountKidsByMunicipalCode(String code){
+        int count = 0;
+        if (this.head != null){
+            Node temp = this.head;
+            while (temp != null){
+                if(temp.getData().getCity().getCode().substring(6, 9).equals(code)){
+                    count++;
+                }
+                temp = temp.getNext();
+            }
+        }
+        return count;
+    }
+
+    public boolean addKidDone(Kid newKid){
+        Node temp = this.head;
+        while (temp != null){
+            Kid kid = temp.getData();
+            if (kid.getIdentification().equals(newKid.getIdentification()) && kid.getName().equals(newKid.getName())
+                && kid.getAge() == newKid.getAge() && kid.getGender() == newKid.getGender()
+                && kid.getCity().getCode().equals(newKid.getCity().getCode())){
+                return true;
+            }
+            temp = temp.getNext();
+        }
+        return false;
+    }
 }
