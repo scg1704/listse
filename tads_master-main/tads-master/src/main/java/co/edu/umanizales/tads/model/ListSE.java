@@ -170,4 +170,38 @@ public class ListSE {
         }
         return false;
     }
+
+    public void deleteByAge (int age){
+        Node temp = head;
+        Node prev = null;
+        while (temp != null && temp.getData().getAge() != age){
+            prev = temp;
+            temp = temp.getNext();
+        }
+        if (temp != null){
+            if (prev == null){
+                head = temp.getNext();
+            }
+            else{
+                prev.setNext(temp.getNext());
+            }
+        }
+    }
+
+    public void setNodeForward (int place, int positions){
+    }
+
+    /*
+    10 métodos:
+    1) Invertir lista (CHECK)
+    2) Niños al inicio, niñas al final
+    3) Intercalar niño-niña
+    4) Eliminar por edad (CHECK)
+    5) Promedio edad niños lista (CHECK)
+    6) Reporte de niños por ciudad (CHECK)
+    7) Adelante x número de posiciones
+    8) Pierda x número de posiciones
+    9) Informe de niños por rango de edades
+    10) Enviar al final de la lista niños cuyo nombre inicie con una letra dada
+     */
 }

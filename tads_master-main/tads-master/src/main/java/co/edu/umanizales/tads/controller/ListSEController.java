@@ -130,4 +130,11 @@ public class ListSEController {
         }
         return new ResponseEntity<>(new ResponseDTO(200, kidsCityDTOList, null), HttpStatus.OK);
     }
+
+    @GetMapping(path = "/deletebyage/{age}")
+    public ResponseEntity<ResponseDTO> deleteByAge(@PathVariable int age){
+        listSEService.getKids().deleteByAge(age);
+        return new ResponseEntity<>(new ResponseDTO(200, "Los niños han sido eliminados",
+                null), HttpStatus.OK);
+    }
 }
