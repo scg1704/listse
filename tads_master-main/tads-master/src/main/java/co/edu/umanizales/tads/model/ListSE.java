@@ -188,7 +188,20 @@ public class ListSE {
         }
     }
 
-    public void setNodeForward (int place, int positions){
+    public void sendBottomByLetter(char initial){
+
+        //Creamos la lista copia
+        ListSE sendBottom = new ListSE();
+        Node temp = this.head;
+
+        while (temp != null){
+            if (temp.getData().getName().charAt(0) == Character.toUpperCase(initial)){
+                sendBottom.add(temp.getData());
+            }
+            temp = temp.getNext();
+        }
+
+        this.head = sendBottom.getHead();
     }
 
     /*
@@ -202,6 +215,6 @@ public class ListSE {
     7) Adelante x número de posiciones
     8) Pierda x número de posiciones
     9) Informe de niños por rango de edades
-    10) Enviar al final de la lista niños cuyo nombre inicie con una letra dada
+    10) Enviar al final de la lista niños cuyo nombre inicie con una letra dada (CHECK)
      */
 }

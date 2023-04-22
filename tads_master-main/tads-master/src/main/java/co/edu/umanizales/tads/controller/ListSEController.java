@@ -137,4 +137,11 @@ public class ListSEController {
         return new ResponseEntity<>(new ResponseDTO(200, "Los niños han sido eliminados",
                 null), HttpStatus.OK);
     }
+
+    @GetMapping(path="/sendbottom/{initial}")
+    public ResponseEntity<ResponseDTO> sendBottomByLetter(@PathVariable char initial){
+        listSEService.getKids().sendBottomByLetter(Character.toUpperCase(initial));
+        return new ResponseEntity<>(new ResponseDTO(200, "Los niños con esa letra se han enviado al final",
+                null), HttpStatus.OK);
+    }
 }
