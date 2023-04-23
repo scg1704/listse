@@ -144,4 +144,18 @@ public class ListSEController {
         return new ResponseEntity<>(new ResponseDTO(200, "Los niños con esa letra se han enviado al final",
                 null), HttpStatus.OK);
     }
+
+    @GetMapping(path="/boysfirstgirlslast")
+    public ResponseEntity<ResponseDTO> boyStartGirlsLast(){
+        listSEService.getKids().boyStartGirlsLast();
+        return new ResponseEntity<>(new ResponseDTO(200, "Los niños salen al inicio, las niñas al final",
+                null), HttpStatus.OK);
+    }
+
+    @GetMapping(path="/boythengirl")
+    public ResponseEntity<ResponseDTO> boyThenGirl(){
+        listSEService.getKids().boyThenGirl();
+        return new ResponseEntity<>(new ResponseDTO(200, "Los niños han sido alternados según su género",
+                null), HttpStatus.OK);
+    }
 }

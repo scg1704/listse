@@ -195,6 +195,15 @@ public class ListSE {
         Node temp = this.head;
 
         while (temp != null){
+            if (temp.getData().getName().charAt(0) != Character.toUpperCase(initial)){
+                sendBottom.add(temp.getData());
+            }
+            temp = temp.getNext();
+        }
+
+        temp = this.head;
+
+        while (temp != null){
             if (temp.getData().getName().charAt(0) == Character.toUpperCase(initial)){
                 sendBottom.add(temp.getData());
             }
@@ -204,11 +213,64 @@ public class ListSE {
         this.head = sendBottom.getHead();
     }
 
+    public void boyStartGirlsLast(){
+        ListSE listCopy = new ListSE();
+        Node temp = this.head;
+        while (temp != null){
+            if (temp.getData().getGender() == 'M'){
+                listCopy.add(temp.getData());
+            }
+            temp = temp.getNext();
+        }
+        temp = this.head;
+
+        while (temp != null){
+            if (temp.getData().getGender() == 'F'){
+                listCopy.add((temp.getData()));
+            }
+            temp = temp.getNext();
+        }
+        this.head = listCopy.getHead();
+    }
+
+    public void boyThenGirl(){
+        ListSE listMale = new ListSE();
+        ListSE listFemale = new ListSE();
+        Node temp = this.head;
+        while (temp != null){
+            if(temp.getData().getGender()=='M'){
+                listMale.add(temp.getData());
+            }
+            if(temp.getData().getGender()=='F'){
+                listFemale.add(temp.getData());
+            }
+            temp = temp.getNext();
+        }
+
+        /*A partir de las listas creadas vamos a generar una nueva lista donde vamos a ingresar
+        * los kids de forma alternada
+        */
+        ListSE sortedList = new ListSE();
+        Node maleNode = listMale.getHead();
+        Node femaleNode = listFemale.getHead();
+        while (maleNode != null || femaleNode != null){
+            if (maleNode != null){
+                sortedList.add(maleNode.getData());
+                maleNode = maleNode.getNext();
+            }
+            if (femaleNode != null){
+                sortedList.add(femaleNode.getData());
+                femaleNode = femaleNode.getNext();
+            }
+        }
+        this.head = sortedList.getHead();
+    }
+
     /*
     10 métodos:
     1) Invertir lista (CHECK)
-    2) Niños al inicio, niñas al final
-    3) Intercalar niño-niña
+    2) Niños al inicio, niñas al final (CHECK)
+    3) Intercalar niño-niña (CHECK)
     4) Eliminar por edad (CHECK)
     5) Promedio edad niños lista (CHECK)
     6) Reporte de niños por ciudad (CHECK)
