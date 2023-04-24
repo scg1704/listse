@@ -6,6 +6,7 @@ import co.edu.umanizales.tads.model.Gender;
 import co.edu.umanizales.tads.model.Kid;
 import co.edu.umanizales.tads.model.ListSE;
 import co.edu.umanizales.tads.service.CityService;
+import co.edu.umanizales.tads.service.GenderService;
 import co.edu.umanizales.tads.service.ListSEService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ public class ListSEController {
     private ListSEService listSEService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private GenderService genderService;
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getKids(){
@@ -159,25 +162,26 @@ public class ListSEController {
     }
 
     @GetMapping(path="/kidsbygenrebycitytotal/{age}")
-    public ResponseEntity<ResponseDTO> getKidsByGenreCity(@PathVariable int age){
+    public ResponseEntity<ResponseDTO> getKidsByGenreCity(@PathVariable int age) {
         List<TotalKidsGenreCityDTO> totalKidsGenreCityDTOList = new ArrayList<>();
 
-        for(City city: cityService.getCitiesByCodeSize(0)){
-            int count = listSEService.getKids().getKidsByGenreCity(city.getCode(), age);
-            if (count > 0){
+        for (City city : cityService.getCitiesByCodeSize(8)) {
+            int count = listSEService.getKids().getKidsByCodeCityAge(city.getCode(), age);
+            if (count > 0) {
                 List<KidsGenreCityDTO> kidsGenreCityDTOList = new ArrayList<>();
-                    int countM = listSEService.getKids().getKidsByGenreCity(city.getCode(), "1", age);
-                    int countF = listSEService.getKids().getKidsByGenreCity(city.getCode(), "2", age);
-                    Gender genderM = genderService.getGenderByCode("1");
-                    Gender genderF = genderService.getGenderByCode("2");
-                    if (countM>0){
-                        kidsGenreCityDTOList.add(new KidsGenreCityDTO(genderM, countM));
-                    }
-                    if (countF>0){
-                        kidsGenreCityDTOList.add(new KidsGenreCityDTO(genderF, countF));
-                        totalKidsGenreCityDTOList.add(new TotalKidsGenreCityDTO(city, kidsGenreCityDTOList, count));
-                    }
+                int countM = listSEService.getKids().getKidsByGenreCity(city.getCode(), "1", age);
+                int countF = listSEService.getKids().getKidsByGenreCity(city.getCode(), "2", age);
+                Gender genderM = genderService.getGenderByCode("1");
+                Gender genderF = genderService.getGenderByCode("2");
+                if (countM > 0) {
+                    kidsGenreCityDTOList.add(new KidsGenreCityDTO(genderM, countM));
+                }
+                if (countF > 0) {
+                    kidsGenreCityDTOList.add(new KidsGenreCityDTO(genderF, countF));
+                }
+                totalKidsGenreCityDTOList.add(new TotalKidsGenreCityDTO(city, kidsGenreCityDTOList, count));
+            }
         }
-    }
         return new ResponseEntity<>(new ResponseDTO(200, totalKidsGenreCityDTOList, null), HttpStatus.OK);
+    }
 }

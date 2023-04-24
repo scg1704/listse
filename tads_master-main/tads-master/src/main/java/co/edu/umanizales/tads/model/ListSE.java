@@ -264,12 +264,28 @@ public class ListSE {
         this.head = sortedList.getHead();
     }
 
+    public int getKidsByCodeCityAge(String code, int age){
+        int count = 0;
+        if (this.head != null){
+            Node temp = this.head;
+            while (temp != null){
+                if (temp.getData().getCity().getCode().equals(code)){
+                    if (temp.getData().getAge() > age){
+                        count++;
+                    }
+                }
+                temp = temp.getNext();
+            }
+        }
+        return count;
+    }
+
     public int getKidsByGenreCity(String code, String codeGender, int age){
         int count = 0;
         if (this.head != null){
             Node temp = this.head;
             while (temp != null){
-                if (temp.getData().getCity().getCode().equals(code) && temp.getData().getGender().getCodeGender().equals(code)){
+                if (temp.getData().getCity().getCode().equals(code) && temp.getData().getGender().getCodeGender().equals(codeGender)){
                     if (temp.getData().getAge() > age){
                         count++;
                     }
