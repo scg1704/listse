@@ -1,9 +1,8 @@
 package co.edu.umanizales.tads.controller;
 
-import co.edu.umanizales.tads.controller.dto.KidDTO;
-import co.edu.umanizales.tads.controller.dto.KidsCityDTO;
-import co.edu.umanizales.tads.controller.dto.ResponseDTO;
+import co.edu.umanizales.tads.controller.dto.*;
 import co.edu.umanizales.tads.model.City;
+import co.edu.umanizales.tads.model.Gender;
 import co.edu.umanizales.tads.model.Kid;
 import co.edu.umanizales.tads.model.ListSE;
 import co.edu.umanizales.tads.service.CityService;
@@ -158,4 +157,27 @@ public class ListSEController {
         return new ResponseEntity<>(new ResponseDTO(200, "Los niños han sido alternados según su género",
                 null), HttpStatus.OK);
     }
+
+    @GetMapping(path="/kidsbygenrebycitytotal/{age}")
+    public ResponseEntity<ResponseDTO> getKidsByGenreCity(@PathVariable int age){
+        List<TotalKidsGenreCityDTO> totalKidsGenreCityDTOList = new ArrayList<>();
+
+        for(City city: cityService.getCitiesByCodeSize(0)){
+            int count = listSEService.getKids().getKidsByGenreCity(city.getCode(), age);
+            if (count > 0){
+                List<KidsGenreCityDTO> kidsGenreCityDTOList = new ArrayList<>();
+                    int countM = listSEService.getKids().getKidsByGenreCity(city.getCode(), "1", age);
+                    int countF = listSEService.getKids().getKidsByGenreCity(city.getCode(), "2", age);
+                    Gender genderM = genderService.getGenderByCode("1");
+                    Gender genderF = genderService.getGenderByCode("2");
+                    if (countM>0){
+                        kidsGenreCityDTOList.add(new KidsGenreCityDTO(genderM, countM));
+                    }
+                    if (countF>0){
+                        kidsGenreCityDTOList.add(new KidsGenreCityDTO(genderF, countF));
+                        totalKidsGenreCityDTOList.add(new TotalKidsGenreCityDTO(city, kidsGenreCityDTOList, count));
+                    }
+        }
+    }
+        return new ResponseEntity<>(new ResponseDTO(200, totalKidsGenreCityDTOList, null), HttpStatus.OK);
 }

@@ -246,10 +246,8 @@ public class ListSE {
             }
             temp = temp.getNext();
         }
-
         /*A partir de las listas creadas vamos a generar una nueva lista donde vamos a ingresar
-        * los kids de forma alternada
-        */
+        * los kids de forma alternada*/
         ListSE sortedList = new ListSE();
         Node maleNode = listMale.getHead();
         Node femaleNode = listFemale.getHead();
@@ -264,6 +262,22 @@ public class ListSE {
             }
         }
         this.head = sortedList.getHead();
+    }
+
+    public int getKidsByGenreCity(String code, String codeGender, int age){
+        int count = 0;
+        if (this.head != null){
+            Node temp = this.head;
+            while (temp != null){
+                if (temp.getData().getCity().getCode().equals(code) && temp.getData().getGender().getCodeGender().equals(code)){
+                    if (temp.getData().getAge() > age){
+                        count++;
+                    }
+                }
+                temp = temp.getNext();
+            }
+        }
+        return count;
     }
 
     /*
