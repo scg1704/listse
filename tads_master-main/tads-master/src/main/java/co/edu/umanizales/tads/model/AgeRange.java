@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Gender {
-    private String codeGender;
-    private char gender;
+public class AgeRange {
+    int from;
+    int to;
 }

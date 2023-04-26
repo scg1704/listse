@@ -11,6 +11,6 @@ public class Kid {
     private String identification;
     private String name;
     private int age;
-    private Gender gender;
+    private char gender;
     private City city;
 }

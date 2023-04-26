@@ -1,6 +1,7 @@
 package co.edu.umanizales.tads.model;
 
 import co.edu.umanizales.tads.controller.dto.KidsCityDTO;
+import co.edu.umanizales.tads.controller.dto.ReportKidsLocationGenderDTO;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -264,36 +265,29 @@ public class ListSE {
         this.head = sortedList.getHead();
     }
 
-    public int getKidsByCodeCityAge(String code, int age){
-        int count = 0;
-        if (this.head != null){
-            Node temp = this.head;
-            while (temp != null){
-                if (temp.getData().getCity().getCode().equals(code)){
-                    if (temp.getData().getAge() > age){
-                        count++;
-                    }
-                }
-                temp = temp.getNext();
+    public int getAgeRange(int min, int max){
+        Node temp = head;
+        int count=0;
+        while (temp != null){
+            if(temp.getData().getAge() >= min && temp.getData().getAge() <= max){
+                count++;
             }
+            temp = temp.getNext();
         }
         return count;
     }
 
-    public int getKidsByGenreCity(String code, String codeGender, int age){
-        int count = 0;
-        if (this.head != null){
+    public void getReportKidsByLocationGendersByAge(int age, ReportKidsLocationGenderDTO report){
+        if (head!=null){
             Node temp = this.head;
             while (temp != null){
-                if (temp.getData().getCity().getCode().equals(code) && temp.getData().getGender().getCodeGender().equals(codeGender)){
-                    if (temp.getData().getAge() > age){
-                        count++;
-                    }
+                if(temp.getData().getAge()>age){
+                    report.updateQuantity(temp.getData().getCity().getName(),
+                            temp.getData().getGender());
                 }
                 temp = temp.getNext();
             }
         }
-        return count;
     }
 
     /*
@@ -306,7 +300,7 @@ public class ListSE {
     6) Reporte de niños por ciudad (CHECK)
     7) Adelante x número de posiciones
     8) Pierda x número de posiciones
-    9) Informe de niños por rango de edades
+    9) Informe de niños por rango de edades (CHECK)
     10) Enviar al final de la lista niños cuyo nombre inicie con una letra dada (CHECK)
      */
 }
