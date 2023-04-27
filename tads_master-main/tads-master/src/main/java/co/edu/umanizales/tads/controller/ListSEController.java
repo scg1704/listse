@@ -75,7 +75,7 @@ public class ListSEController {
     @GetMapping(path="/changeextremes")
     public ResponseEntity<ResponseDTO> changeExtremes(){
         listSEService.getKids().changeExtremes();
-        return new ResponseEntity<>(new ResponseDTO(200, "Se han intercambiado los extremos",
+        return new ResponseEntity<>(new ResponseDTO(200, "Extremes have been changed",
                 null), HttpStatus.OK);
     }
 
@@ -85,14 +85,14 @@ public class ListSEController {
         Boolean addKidDone = listSEService.getKids().addKidDone(new Kid(kidDTO.getIdentification(),
                 kidDTO.getName(), kidDTO.getAge(), kidDTO.getGender(), city));
         if (city == null){
-            return new ResponseEntity<>(new ResponseDTO(404, "La ubicación no existe", null), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseDTO(404, "Location doesn't exist", null), HttpStatus.OK);
         }
         else if(addKidDone.equals(false)){
-            return new ResponseEntity<>(new ResponseDTO(400, "El elemento ya existe", null), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseDTO(400, "Already exists", null), HttpStatus.OK);
         }
         else{
             listSEService.getKids().add(new Kid(kidDTO.getIdentification(), kidDTO.getName(), kidDTO.getAge(), kidDTO.getGender(), city));
-            return new ResponseEntity<>(new ResponseDTO(200, "Se ha adicionado el niño", null), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseDTO(200, "Kid has been added", null), HttpStatus.OK);
         }
     }
 
@@ -135,28 +135,28 @@ public class ListSEController {
     @GetMapping(path = "/deletebyage/{age}")
     public ResponseEntity<ResponseDTO> deleteByAge(@PathVariable int age){
         listSEService.getKids().deleteByAge(age);
-        return new ResponseEntity<>(new ResponseDTO(200, "Los niños han sido eliminados",
+        return new ResponseEntity<>(new ResponseDTO(200, "Kids were deleted",
                 null), HttpStatus.OK);
     }
 
     @GetMapping(path="/sendbottom/{initial}")
     public ResponseEntity<ResponseDTO> sendBottomByLetter(@PathVariable char initial){
         listSEService.getKids().sendBottomByLetter(Character.toUpperCase(initial));
-        return new ResponseEntity<>(new ResponseDTO(200, "Los niños con esa letra se han enviado al final",
+        return new ResponseEntity<>(new ResponseDTO(200, "Kids with that letter at start have been sent to the end",
                 null), HttpStatus.OK);
     }
 
     @GetMapping(path="/boysfirstgirlslast")
     public ResponseEntity<ResponseDTO> boyStartGirlsLast(){
         listSEService.getKids().boyStartGirlsLast();
-        return new ResponseEntity<>(new ResponseDTO(200, "Los niños salen al inicio, las niñas al final",
+        return new ResponseEntity<>(new ResponseDTO(200, "Boys are at the start, girls are at last",
                 null), HttpStatus.OK);
     }
 
     @GetMapping(path="/boythengirl")
     public ResponseEntity<ResponseDTO> boyThenGirl(){
         listSEService.getKids().boyThenGirl();
-        return new ResponseEntity<>(new ResponseDTO(200, "Los niños han sido alternados según su género",
+        return new ResponseEntity<>(new ResponseDTO(200, "Kids have been altered by them gender",
                 null), HttpStatus.OK);
     }
 
@@ -176,6 +176,18 @@ public class ListSEController {
         ReportKidsLocationGenderDTO report = new ReportKidsLocationGenderDTO(cityService.getCitiesByCodeSize(8));
         listSEService.getKids().getReportKidsByLocationGendersByAge(age, report);
         return new ResponseEntity<>(new ResponseDTO(200, report, null), HttpStatus.OK);
+    }
+
+    @GetMapping(path="/forwardpositions")
+    public ResponseEntity<ResponseDTO> forwardPositions(@PathVariable String identification, int positions){
+        listSEService.getKids().forwardPositions(identification, positions);
+        return new ResponseEntity<>(new ResponseDTO(200, "The kid has been moved to the position", null), HttpStatus.OK);
+    }
+
+    @GetMapping(path="/afterwardspositions")
+    public ResponseEntity<ResponseDTO> afterwardsPositions(@PathVariable String identification, int positions){
+        listSEService.getKids().afterwardsPositions(identification, positions);
+        return new ResponseEntity<>(new ResponseDTO(200, "The kid has been moved to the position", null), HttpStatus.OK);
     }
 
 }
