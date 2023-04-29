@@ -8,6 +8,7 @@ import lombok.Data;
 public class Pet {
     private String petCode;
     private String petName;
+    private String specie;
     private int petAge;
     private char gender;
     private Vet vet;
