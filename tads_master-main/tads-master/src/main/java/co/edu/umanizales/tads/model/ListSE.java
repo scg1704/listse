@@ -58,7 +58,7 @@ public class ListSE {
         Node temp = head;
         Node prev = null;
 
-        while (temp.getNext() != null && temp.getData().getIdentification() != identification) {
+        while (temp.getNext() != null && temp.getData().getIdentification() == identification) {
             prev = temp;
             temp = temp.getNext();
         }
@@ -175,7 +175,7 @@ public class ListSE {
     public void deleteByAge (int age){
         Node temp = head;
         Node prev = null;
-        while (temp != null && temp.getData().getAge() != age){
+        while (temp != null && temp.getData().getAge() == age){
             prev = temp;
             temp = temp.getNext();
         }
