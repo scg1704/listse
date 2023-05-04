@@ -2,6 +2,7 @@ package co.edu.umanizales.tads.model;
 
 import co.edu.umanizales.tads.controller.dto.KidsCityDTO;
 import co.edu.umanizales.tads.controller.dto.ReportKidsLocationGenderDTO;
+import co.edu.umanizales.tads.exception.ListSEException;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ListSE {
     *       Añadimos el nuevo nodo en donde está el ayudante
     *   SI
     *   Agregamos el nuevo nodo como cabeza*/
-    public void add(Kid kid){
+    public void add(Kid kid) throws ListSEException{
         if(head != null){
             Node temp = head;
             while(temp.getNext() !=null)
@@ -50,7 +51,7 @@ public class ListSE {
         SI
         Añadimos el nuevo niño como la cabeza
      */
-    public void addToStart(Kid kid){
+    public void addToStart(Kid kid) throws ListSEException{
         if(head !=null)
         {
             Node newNode = new Node(kid);
@@ -76,7 +77,7 @@ public class ListSE {
         Cuando llegamos a la posición deseada añadimos el niño
      */
 
-    public void addByPosition(Kid kid, int position){
+    public void addByPosition(Kid kid, int position) throws ListSEException{
         Node newNode = new Node(kid);
         if (position == 0){
             newNode.setNext(head);
@@ -104,7 +105,7 @@ public class ListSE {
                 SI
                 Llamamos al segundo ayudante para que lo elimine, y así se puedan un unir el nodo anterior, y el siguiente
      */
-    public void deleteByIdentification (String identification){
+    public void deleteByIdentification (String identification) throws ListSEException{
         Node temp = head;
         Node prev = null;
 
@@ -130,7 +131,7 @@ public class ListSE {
         Le decimos al temporal que recorra toda la lista de niños y a cada uno lo añada al inicio de la nueva lista
     Reemplazamos la nueva lista hecha en la original
      */
-    public void invert(){
+    public void invert() throws ListSEException{
         if(this.head != null){
             ListSE listCP = new ListSE();
             Node temp = this.head;
@@ -155,7 +156,7 @@ public class ListSE {
      SI
         Decimos que el promedio es de 0
      */
-    public float averageAge(){
+    public float averageAge() throws ListSEException{
         /*Me toca poner el método como float y no como vacío; Si lo pongo vacío me arroja error
         al momento de retornar valores
         Cambié los valores de age a int, de esa forma se me hizo más fácil trabajar el ejercicio*/
@@ -184,7 +185,7 @@ public class ListSE {
         Ponemos los datos del último niño al inicio
         Ponemos los datos del primer niño al final
      */
-    public void changeExtremes(){
+    public void changeExtremes() throws ListSEException{
         if(this.head !=null && this.head.getNext() !=null){
             Node temp = this.head;
             while(temp.getNext() != null){
@@ -209,7 +210,7 @@ public class ListSE {
             Añadimos 1 al contador
     Devolvemos los resultados del contador
      */
-    public int getCountKidsByCityCode(String code){
+    public int getCountKidsByCityCode(String code) throws ListSEException{
         int count = 0;
         if(this.head != null){
             Node temp = this.head;
@@ -236,7 +237,7 @@ public class ListSE {
             Añadimos 1 al contador
     Devolvemos los resultados del contador
      */
-    public int getCountKidsByDeptCode(String code){
+    public int getCountKidsByDeptCode(String code) throws ListSEException{
         int count = 0;
         if (this.head != null){
             Node temp = this.head;
@@ -263,7 +264,7 @@ public class ListSE {
             Añadimos 1 al contador
     Devolvemos los resultados del contador
      */
-    public int getCountKidsByMunicipalCode(String code){
+    public int getCountKidsByMunicipalCode(String code) throws ListSEException{
         int count = 0;
         if (this.head != null){
             Node temp = this.head;
@@ -286,7 +287,7 @@ public class ListSE {
         SI
             Decimos que es cierto, y no lo añadimos
      */
-    public boolean addKidDone(Kid newKid){
+    public boolean addKidDone(Kid newKid) throws ListSEException{
         Node temp = this.head;
         while (temp != null){
             Kid kid = temp.getData();
@@ -313,7 +314,7 @@ public class ListSE {
                 SI
                 Llamamos al segundo ayudante para que lo elimine, y así se puedan un unir el nodo anterior, y el siguiente
      */
-    public void deleteByAge (int age){
+    public void deleteByAge (int age) throws ListSEException{
         Node temp = head;
         Node prev = null;
         while (temp != null && temp.getData().getAge() == age){
@@ -344,7 +345,7 @@ public class ListSE {
             Lo añadimos al final de la lista copia
     Reemplazamos la lista copia por la original
      */
-    public void sendBottomByLetter(char initial){
+    public void sendBottomByLetter(char initial) throws ListSEException{
 
         //Creamos la lista copia
         ListSE sendBottom = new ListSE();
@@ -383,7 +384,7 @@ public class ListSE {
                 Lo añadimos al final de la lista copia
      Reemplazamos la lista copia por la original
      */
-    public void boyStartGirlsLast(){
+    public void boyStartGirlsLast() throws ListSEException{
         ListSE listCopy = new ListSE();
         Node temp = this.head;
         while (temp != null){
@@ -422,7 +423,7 @@ public class ListSE {
         Tomo la cabeza de la lista de niñas y la agrego a la nueva lista copia
      Reemplazo la nueva lista en la lista original
      */
-    public void boyThenGirl(){
+    public void boyThenGirl() throws ListSEException{
         ListSE listMale = new ListSE();
         ListSE listFemale = new ListSE();
         Node temp = this.head;
@@ -466,7 +467,7 @@ public class ListSE {
                 Añado 1 al contador
     Devuelvo todos los valores
      */
-    public int getAgeRange(int min, int max){
+    public int getAgeRange(int min, int max) throws ListSEException{
         Node temp = head;
         int count=0;
         while (temp != null){
@@ -489,7 +490,7 @@ public class ListSE {
             SI
                 Obtenemos a ese nodo, y actualizamos la cantidad
      */
-    public void getReportKidsByLocationGendersByAge(int age, ReportKidsLocationGenderDTO report){
+    public void getReportKidsByLocationGendersByAge(int age, ReportKidsLocationGenderDTO report) throws ListSEException{
         if (head!=null){
             Node temp = this.head;
             while (temp != null){
@@ -526,7 +527,7 @@ public class ListSE {
                NO
                 Lo añadimos al contador restado al número de posiciones
      */
-    public void forwardPositions(String identification, int positions){
+    public void forwardPositions(String identification, int positions) throws ListSEException{
         if (head != null){
             if(positions<size){
                 if(head.getData().getIdentification()==identification){
@@ -577,7 +578,7 @@ public class ListSE {
             Llamamos otro ayudante
             Le decimos que añada en posición según el conteo más el número de posiciones
      */
-    public void afterwardsPositions(String identification, int positions){
+    public void afterwardsPositions(String identification, int positions) throws ListSEException{
         if (head!=null){
             if(positions<size){
                 if(head.getData().getIdentification()==identification){
