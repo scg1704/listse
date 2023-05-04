@@ -11,6 +11,18 @@ import java.util.List;
 public class ListSE {
     private Node head;
     private int size;
+
+    /*LÓGICA MÉTODO AÑADIR:
+    Entrada: El niño que vamos a añadir
+    * La cabeza está vacía?
+    *   NO
+    *   Llamamos al ayudante y lo posiciones en la cabeza
+    *   Le decimos al ayudante que recorra toda la lista
+    *       Hay algo?
+    *       No
+    *       Añadimos el nuevo nodo en donde está el ayudante
+    *   SI
+    *   Agregamos el nuevo nodo como cabeza*/
     public void add(Kid kid){
         if(head != null){
             Node temp = head;
@@ -27,6 +39,17 @@ public class ListSE {
         size++;
     }
 
+    /*LÓGICA MÉTODO AÑADIR AL INICIO:
+    Entrada:
+    El niño que vamos a añadir
+    La cabeza está vacía?
+        NO
+        Añadimos los datos del niño a un nuevo nodo
+        Decimos que se haga al lado de la cabeza
+        El nuevo nodo se convierte en la cabeza
+        SI
+        Añadimos el nuevo niño como la cabeza
+     */
     public void addToStart(Kid kid){
         if(head !=null)
         {
@@ -39,6 +62,19 @@ public class ListSE {
         }
         size++;
     }
+
+    /*LÓGICA MÉTODO AÑADIR POR POSICIÓN:
+    Entrada:
+    El niño que vamos a añadir, la posición donde lo vamos a añadir
+    Creamos la variable que va a almacenar el niño
+    ¿La posición donde lo queremos añadir es la 0?
+        SI
+        Lo añadimos como cabeza
+        NO
+        Llamamos un ayudante
+        Le decimos que recorra la lista el número de posiciones que fueron solicitadas
+        Cuando llegamos a la posición deseada añadimos el niño
+     */
 
     public void addByPosition(Kid kid, int position){
         Node newNode = new Node(kid);
@@ -54,6 +90,20 @@ public class ListSE {
             temp.setNext(newNode);
         }
     }
+
+    /*LÓGICA MÉTODO ELIMINAR POR ID:
+    Entrada: La identificación que nos dirá que niño eliminar
+    Llamamos dos ayudantes; Uno empezará desde la cabeza, y el otro actuará más tarde
+    Recorremos la lista parando con el ayudante en cada nodo
+        Tiene la misma identificación solicitada?
+        No
+            Seguimos recorriendo la lista
+        Si
+            Paramos ahí
+            La lista tiene datos?
+                SI
+                Llamamos al segundo ayudante para que lo elimine, y así se puedan un unir el nodo anterior, y el siguiente
+     */
     public void deleteByIdentification (String identification){
         Node temp = head;
         Node prev = null;
@@ -72,6 +122,14 @@ public class ListSE {
         }
     }
 
+    /*LÓGICA MÉTODO INVERTIR:
+    La cabeza está vacía?
+        NO
+        Creamos una lista SE adicional
+        Llamamos al temporal y lo ponemos en la cabeza
+        Le decimos al temporal que recorra toda la lista de niños y a cada uno lo añada al inicio de la nueva lista
+    Reemplazamos la nueva lista hecha en la original
+     */
     public void invert(){
         if(this.head != null){
             ListSE listCP = new ListSE();
@@ -84,6 +142,19 @@ public class ListSE {
         }
     }
 
+    /*LÓGICA MÉTODO PROMEDIO EDAD:
+    La cabeza está vacía?
+    NO
+        Llamamos a un ayudante
+        Creamos un contador que nos va a decir cuantos niños hay en la lista
+        Creamos otro contador que va a sumar la edad de cada niño
+        Recorremos la lista
+            Por cada nodo añadimos uno al primer contador
+            Por cada nodo obtenemos la edad y se la sumamos al segundo contador
+        Ya con ambos contadores finalizados hacemos la operación. Dividimos el resultado del total de las edades con el total de niños
+     SI
+        Decimos que el promedio es de 0
+     */
     public float averageAge(){
         /*Me toca poner el método como float y no como vacío; Si lo pongo vacío me arroja error
         al momento de retornar valores
@@ -104,6 +175,15 @@ public class ListSE {
         }
     }
 
+    /*LÓGICA MÉTODO CAMBIAR EXTREMOS:
+    Hay datos?
+    SI
+        Llamamos al ayudante
+        Le decimos que recorra la lista hasta el final
+        Obtenemos los datos del primer niño
+        Ponemos los datos del último niño al inicio
+        Ponemos los datos del primer niño al final
+     */
     public void changeExtremes(){
         if(this.head !=null && this.head.getNext() !=null){
             Node temp = this.head;
@@ -116,6 +196,19 @@ public class ListSE {
         }
     }
 
+    /*LÓGICA MÉTODO CONTAR NIÑOS POR CÓDIGO LOCALIZACIÓN:
+    Entrada:
+    Código de la localización
+    Creamos un contador
+    Tiene datos?
+    SI
+        Llamamos al ayudante
+        Le decimos que recorra la lista
+        El nodo donde está tiene el mismo código de ciudad al de entrada?
+        SI
+            Añadimos 1 al contador
+    Devolvemos los resultados del contador
+     */
     public int getCountKidsByCityCode(String code){
         int count = 0;
         if(this.head != null){
@@ -130,6 +223,19 @@ public class ListSE {
         return count;
     }
 
+    /*LÓGICA MÉTODO CONTAR NIÑOS POR CÓDIGO LOCALIZACIÓN -DEPARTAMENTO:
+    Entrada:
+    Código de la localización
+    Creamos un contador
+    Tiene datos?
+    SI
+        Llamamos al ayudante
+        Le decimos que recorra la lista
+        El nodo donde está tiene el mismo código de ciudad al de entrada y posee un máximo de 5 dígitos?
+        SI
+            Añadimos 1 al contador
+    Devolvemos los resultados del contador
+     */
     public int getCountKidsByDeptCode(String code){
         int count = 0;
         if (this.head != null){
@@ -144,6 +250,19 @@ public class ListSE {
         return count;
     }
 
+    /*LÓGICA MÉTODO CONTAR NIÑOS POR CÓDIGO LOCALIZACIÓN -CIUDAD:
+    Entrada:
+    Código de la localización
+    Creamos un contador
+    Tiene datos?
+    SI
+        Llamamos al ayudante
+        Le decimos que recorra la lista
+        El nodo donde está tiene el mismo código de ciudad al de entrada y tiene de 6 a 9 dígitos?
+        SI
+            Añadimos 1 al contador
+    Devolvemos los resultados del contador
+     */
     public int getCountKidsByMunicipalCode(String code){
         int count = 0;
         if (this.head != null){
@@ -158,6 +277,15 @@ public class ListSE {
         return count;
     }
 
+    /*LÓGICA MÉTODO REVISAR SI EL NIÑO YA HA SIDO AÑADIDO:
+    Entrada:
+    Los datos del niño
+    Llamamos al ayudante
+    Le decimos que recorra la lista y obtenga los datos de los niños
+        Los datos obtenidos del niño son iguales a los ingresados?
+        SI
+            Decimos que es cierto, y no lo añadimos
+     */
     public boolean addKidDone(Kid newKid){
         Node temp = this.head;
         while (temp != null){
@@ -172,6 +300,19 @@ public class ListSE {
         return false;
     }
 
+    /*LÓGICA MÉTODO ELIMINAR POR EDAD:
+    Entrada: La edad que nos dirá que niños eliminar
+    Llamamos dos ayudantes; Uno empezará desde la cabeza, y el otro actuará más tarde
+    Recorremos la lista parando con el ayudante en cada nodo
+        Tiene la misma edad solicitada?
+        No
+            Seguimos recorriendo la lista
+        Si
+            Paramos ahí
+            La lista tiene datos?
+                SI
+                Llamamos al segundo ayudante para que lo elimine, y así se puedan un unir el nodo anterior, y el siguiente
+     */
     public void deleteByAge (int age){
         Node temp = head;
         Node prev = null;
@@ -189,6 +330,20 @@ public class ListSE {
         }
     }
 
+    /*LÓGICA MÉTODO ELIMINAR AL FONDO SEGÚN LA LETRA:
+    Entrada:
+    La inicial que buscamos enviar al fondo
+    Creamos una lista copia
+    Llamamos al ayudante
+    Le decimos al ayudante que recorra la lista
+        Su primer cáracter es diferente al solicitado?
+        SI
+            Lo añadimos al final de la lista copia
+        Su primer carácter es el solicitado?
+        SI
+            Lo añadimos al final de la lista copia
+    Reemplazamos la lista copia por la original
+     */
     public void sendBottomByLetter(char initial){
 
         //Creamos la lista copia
@@ -214,6 +369,20 @@ public class ListSE {
         this.head = sendBottom.getHead();
     }
 
+    /*LÓGICA MÉTODO NIÑOS AL INICIO, NIÑAS AL FINAL:
+    Creamos una lista copia
+    Llamamos al ayudante
+    La lista está vacía?
+    No
+        Recorro la lista de niños
+            Su género es 'M'?
+            SI
+                Lo añadimos al final de la lista copia
+            Su género es 'F'?
+            SI
+                Lo añadimos al final de la lista copia
+     Reemplazamos la lista copia por la original
+     */
     public void boyStartGirlsLast(){
         ListSE listCopy = new ListSE();
         Node temp = this.head;
@@ -234,6 +403,25 @@ public class ListSE {
         this.head = listCopy.getHead();
     }
 
+    /*LÓGICA MÉTODO PRIMERO CHICO, LUEGO CHICA:
+    Creamos una lista copia donde vamos a almacenar todas las chicas
+    Creamos una lista copia donde vamos a almacenar todos los chicos
+    Llamamos al ayudante
+    Hay datos?
+    SI
+        Recorro la lista de niños
+            Su género es 'M'?
+            SI
+                Lo añado a la lista copia de chicos
+            Su género es 'F'?
+            SI
+                Lo añado a la lista copia de chicas
+     Creo una nueva lista copia
+     Recorro ambas listas copia de niños y niñas
+        Tomo la cabeza de la lista de niños y la agrego a la nueva lista copia
+        Tomo la cabeza de la lista de niñas y la agrego a la nueva lista copia
+     Reemplazo la nueva lista en la lista original
+     */
     public void boyThenGirl(){
         ListSE listMale = new ListSE();
         ListSE listFemale = new ListSE();
@@ -265,6 +453,19 @@ public class ListSE {
         this.head = sortedList.getHead();
     }
 
+    /*LÓGICA MÉTODO OBTENER RANGO DE EDADES:
+    Entrada:
+    Mínimo de edad, máximo de edad
+    Llamo al ayudante
+    Creo un contador
+    La lista tiene datos?
+    SI
+        Recorro la lista
+            El nodo tiene una edad entre la mínima y la máxima?
+            SI
+                Añado 1 al contador
+    Devuelvo todos los valores
+     */
     public int getAgeRange(int min, int max){
         Node temp = head;
         int count=0;
@@ -277,6 +478,17 @@ public class ListSE {
         return count;
     }
 
+    /*LÓGICA MÉTODO REPORTE DE NIÑOS SEGÚN GÉNERO Y LOCALIZACIÓN:
+    Entrada:
+    La edad mínima de niños que se buscan, el reporte obtenido anteriormente por el DTO
+    La lista tiene datos?
+    SI
+        Llamamos un ayudante
+        Recorremos la lista
+            El nodo donde estamos parados tiene edad mayor a la solicitada?
+            SI
+                Obtenemos a ese nodo, y actualizamos la cantidad
+     */
     public void getReportKidsByLocationGendersByAge(int age, ReportKidsLocationGenderDTO report){
         if (head!=null){
             Node temp = this.head;
@@ -290,6 +502,30 @@ public class ListSE {
         }
     }
 
+    /*LÓGICA MÉTODO ADELANTAR POSICIONES:
+    Entrada:
+    Identificación del niño a cambiar de posición, y el número de posiciones que lo queremos cambiar
+    La lista tiene datos?
+    SI
+        El tamaño es mayor a las posiciones a adelantar?
+            Es la cabeza?
+            SI
+                No puede adelantar posiciones
+            NO
+                Llamamos a un ayudante
+                Creamos un contador
+                Recorremos la lista
+                    La identificación es diferente a la del niño?
+                    SI
+                        Seguimos recorriendo la lista
+                        Aumentamos el contador
+               Llamamos a otro ayudante
+               Es mayor el número de posiciones al del conteo?
+               SI
+                Lo añadimos al inicio, como si fuera la cabeza
+               NO
+                Lo añadimos al contador restado al número de posiciones
+     */
     public void forwardPositions(String identification, int positions){
         if (head != null){
             if(positions<size){
@@ -322,6 +558,25 @@ public class ListSE {
         }
     }
 
+    /*LÓGICA MÉTODO RETROCEDER POSICIONES:
+    Entrada:
+    Identificación del niño a cambiar de posición, y el número de posiciones que lo queremos cambiar
+    La lista tiene datos?
+    SI
+        El tamaño es mayor a las posiciones a adelantar?
+            Tiene la misma identificación?
+            SI
+                Creamos un nuevo nodo, y a partir de este vamos a obtener las posiciones que se pueden retroceder desde la cabeza
+            NO
+                Creamos un contador
+                Llamamos al ayudante
+                Recorremos la lista
+                La identificación es diferente?
+                SI
+                    Aumentamos el contador
+            Llamamos otro ayudante
+            Le decimos que añada en posición según el conteo más el número de posiciones
+     */
     public void afterwardsPositions(String identification, int positions){
         if (head!=null){
             if(positions<size){

@@ -31,6 +31,16 @@ public class VetService {
         vets.add(new Vet("111", "Pets Health Services & Co", "Knicks Stadium, NY"));
     }
 
+    /*MÉTODO PARA OBTENER VETERINARIAS SEGÚN EL TAMAÑO DEL CÓDIGO:
+    Entrada:
+    Tamaño del código
+    Llamamos la lista de veterinarias
+    Recorremos las veterinarias
+        El código es del mismo largo?
+        SI
+            Se añade
+    Se devuelven los datos de todas las veterinarias obtenidas
+    */
     public List<Vet> getVetsByCodeSize(int size){
         List<Vet> listVets = new ArrayList<>();
         for(Vet vet: vets){
@@ -41,6 +51,15 @@ public class VetService {
         return listVets ;
     }
 
+    /*MÉTODO PARA OBTENER VETERINARIA SEGÚN EL CÓDIGO:
+    Entrada:
+    Código
+    Llamamos la lista de veterinarias
+    Recorremos las veterinarias
+        El código es igual?
+        SI
+            Se devuelve la veterinaria
+    */
     public Vet getVetByCode(String code){
         for(Vet vet : vets){
             if(vet.getCode().equals(code)){

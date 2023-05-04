@@ -24,6 +24,16 @@ public class CityService {
         cities.add(new City("16917003", "Chinchiná"));
     }
 
+    /*MÉTODO PARA OBTENER LOCALIZACIONES SEGÚN EL TAMAÑO DEL CÓDIGO:
+    Entrada:
+    Tamaño del código
+    Llamamos la lista de ciudades
+    Recorremos las ciudades
+        El código es del mismo largo?
+        SI
+            Se añade
+    Se devuelven los datos de todas las localizaciones obtenidas
+    */
     public List<City> getCitiesByCodeSize(int size){
         List<City> listCities = new ArrayList<>();
         for(City city: cities){
@@ -34,6 +44,15 @@ public class CityService {
         return listCities;
     }
 
+    /*MÉTODO PARA OBTENER CIUDAD SEGÚN EL CÓDIGO:
+    Entrada:
+    Código
+    Llamamos la lista de ciudades
+    Recorremos las ciudades
+        El código es igual?
+        SI
+            Se devuelve la ciudad
+    */
     public City getCityByCode(String code){
         for(City city : cities){
             if(city.getCode().equals(code)){

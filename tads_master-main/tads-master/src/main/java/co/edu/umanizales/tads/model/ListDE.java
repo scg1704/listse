@@ -9,6 +9,10 @@ public class ListDE {
     private NodeDE head;
     private int size;
 
+    /*LÓGICA MÉTODO AÑADIR:
+    Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
+    Entonces, al tener el nodo previo, debemos de conectar el nuevo nodo al nodo anterior
+    */
     public void addPet(Pet pet)
     {
         if(this.head!=null)
@@ -29,6 +33,10 @@ public class ListDE {
         size++;
     }
 
+    /*LÓGICA MÉTODO AÑADIR AL INICIO:
+    Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
+    Entonces, al tener el nodo previo, debemos de conectar el nodo siguiente a la cabeza con esta
+    */
     public void addPetToStart(Pet pet){
         if(head !=null)
         {
@@ -43,6 +51,11 @@ public class ListDE {
         size++;
     }
 
+    /*LÓGICA MÉTODO AÑADIR POR POSICIÓN:
+    Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
+    Entonces, al tener el nodo previo, debemos de conectar el nuevo nodo al nodo anterior
+    Y el siguiente nodo, al nodo nuevo
+    */
     public void addPetByPosition(Pet pet, int position){
         NodeDE newNode = new NodeDE(pet);
         if (position == 0){
@@ -66,6 +79,10 @@ public class ListDE {
         size++;
     }
 
+    /*LÓGICA MÉTODO ELIMINAR SEGÚN CÓDIGO:
+    Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
+    Conectamos el nodo previo del nodo que estaba después del nodo eliminado, al nodo que estaba antes del nodo eliminado
+    */
     public void deleteByPetCode (String petCode){
         NodeDE temp = head;
         NodeDE prev = null;
@@ -91,6 +108,9 @@ public class ListDE {
         }
     }
 
+    /*LÓGICA MÉTODO INVERTIR:
+    Usamos la misma lógica del código de listas SE. No se hace ningún cambio
+    */
     public void invertPets(){
         if(this.head != null){
             ListDE listCP = new ListDE();
@@ -103,6 +123,9 @@ public class ListDE {
         }
     }
 
+    /*LÓGICA MÉTODO PROMEDIO EDADES:
+    Usamos la misma lógica del código de listas SE. No se realiza ningún cambio
+    */
     public float averageAgePets(){
         if (head != null){
             NodeDE temp = head;
@@ -120,6 +143,9 @@ public class ListDE {
         }
     }
 
+    /*LÓGICA MÉTODO CAMBIAR EXTREMOS:
+    Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
+    */
     public void changePetExtremes(){
         if(this.head !=null && this.head.getNext() !=null){
             NodeDE temp = this.head;
@@ -132,6 +158,9 @@ public class ListDE {
         }
     }
 
+    /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN EL CÓDIGO DEL VETERINARIO:
+    Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
+    */
     public int getCountPetsByVetCode(String code){
         int count = 0;
         if(this.head != null){
@@ -146,6 +175,9 @@ public class ListDE {
         return count;
     }
 
+    /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN CÓDIGO DEL HOSPITAL:
+    Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
+    */
     public int getCountPetsByHospitalCode(String code){
         int count = 0;
         if (this.head != null){
@@ -160,6 +192,9 @@ public class ListDE {
         return count;
     }
 
+    /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN CÓDIGO DE LA TIENDA DE MASCOTAS:
+    Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
+    */
     public int getCountPetsByStoreCode(String code){
         int count = 0;
         if (this.head != null){
@@ -174,6 +209,9 @@ public class ListDE {
         return count;
     }
 
+    /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN CÓDIGO DE LA TIENDA DE ARTÍCULOS DE MASCOTA:
+    Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
+    */
     public int getCountPetsByStuffCode(String code){
         int count = 0;
         if (this.head != null){
@@ -188,6 +226,9 @@ public class ListDE {
         return count;
     }
 
+    /*LÓGICA MÉTODO REVISAR SI LA MASCOTA YA HA SIDO AÑADIDA:
+    Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
+    */
     public boolean addPetDone(Pet newPet){
         NodeDE temp = this.head;
         while (temp != null){
@@ -202,6 +243,10 @@ public class ListDE {
         return false;
     }
 
+    /*LÓGICA MÉTODO ELIMINAR MASCOTA POR EDAD:
+    Usamos la misma lógica del código de listas SE. No se le hace ningún cambio. Solo que a este se le añade el nodo previo
+    Conectamos el nodo previo del nodo que estaba después del nodo eliminado, al nodo que estaba antes del nodo eliminado
+    */
     public void deleteByPetAge (int age){
         NodeDE temp = head;
         NodeDE prev = null;
@@ -226,6 +271,9 @@ public class ListDE {
         }
     }
 
+    /*LÓGICA MÉTODO ENVIAR AL FONDO POR LETRA:
+    Usamos la misma lógica del código de listas SE.
+     */
     public void sendPetBottomByLetter(char initial){
 
         //Creamos la lista copia
@@ -251,6 +299,9 @@ public class ListDE {
         this.head = sendBottom.getHead();
     }
 
+    /*LÓGICA MÉTODO NIÑOS AL INICIO, NIÑAS AL FINAL:
+    Usamos la misma lógica del código de listas SE.
+     */
     public void maleStartFemaleLast(){
         ListDE listCopy = new ListDE();
         NodeDE temp = this.head;
@@ -271,6 +322,9 @@ public class ListDE {
         this.head = listCopy.getHead();
     }
 
+    /*LÓGICA MÉTODO NIÑO, LUEGO NIÑA:
+    Usamos la misma lógica del código de listas SE.
+     */
     public void maleThenFemale(){
         ListDE listMale = new ListDE();
         ListDE listFemale = new ListDE();
@@ -302,6 +356,9 @@ public class ListDE {
         this.head = sortedList.getHead();
     }
 
+    /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN EL RANGO DE EDAD:
+    Usamos la misma lógica del código de listas SE.
+     */
     public int getPetsAgeRange(int min, int max){
         NodeDE temp = head;
         int count=0;
@@ -314,6 +371,9 @@ public class ListDE {
         return count;
     }
 
+    /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN GÉNERO Y VERTINARIA:
+    Usamos la misma lógica del código de listas SE.
+     */
     public void getReportPetsByVetGendersByAge(int age, ReportPetsVetGenderDTO report){
         if (head!=null){
             NodeDE temp = this.head;
@@ -327,6 +387,10 @@ public class ListDE {
         }
     }
 
+    /*LÓGICA MÉTODO ADELANTAR POSICIONES:
+    Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
+    Entonces, al momento de adelantar la posición, es necesario que el nodo previo del siguiente nodo se conecte con él, y él se conecte con el del anterior nodo
+    */
     public void forwardPetPositions(String petCode, int positions){
         if (head != null){
             if(positions<size){
@@ -362,6 +426,10 @@ public class ListDE {
         }
     }
 
+    /*LÓGICA MÉTODO RETROCEDER POSICIONES:
+    Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
+    Entonces, al momento de adelantar la posición, es necesario que el nodo previo del siguiente nodo se conecte con él, y él se conecte con el del anterior nodo
+    */
     public void afterwardsPetPositions(String petCode, int positions){
         if (head!=null){
             if(positions<size){
