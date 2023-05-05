@@ -8,6 +8,7 @@ import co.edu.umanizales.tads.model.Kid;
 import co.edu.umanizales.tads.service.AgeRangeService;
 import co.edu.umanizales.tads.service.CityService;
 import co.edu.umanizales.tads.service.ListSEService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,22 +33,24 @@ public class ListSEController {
                 200,listSEService.getKids().getHead(),null), HttpStatus.OK);
     }
 
+    //Se insertan las excepciones únicamente donde vayamos a añadir niños
+
     @GetMapping(path="/add")
-    public ResponseEntity<ResponseDTO> add(@RequestBody Kid kid) throws ListSEException{
+    public ResponseEntity<ResponseDTO> add(@RequestBody @Valid Kid kid) throws ListSEException{
         listSEService.getKids().add(kid);
         return new ResponseEntity<>(new ResponseDTO(200,
                 "The kid has been added", null), HttpStatus.OK);
     }
 
     @GetMapping(path="/addstart")
-    public ResponseEntity<ResponseDTO> addToStart(@RequestBody Kid kid) throws ListSEException{
+    public ResponseEntity<ResponseDTO> addToStart(@RequestBody @Valid Kid kid) throws ListSEException{
         listSEService.getKids().addToStart(kid);
         return new ResponseEntity<>(new ResponseDTO(200,
                 "The kid has been added to start", null), HttpStatus.OK);
     }
 
     @GetMapping(path="/addposition")
-    public ResponseEntity<ResponseDTO> addByPosition(@PathVariable int position, @RequestBody Kid kid) throws ListSEException{
+    public ResponseEntity<ResponseDTO> addByPosition(@PathVariable int position, @RequestBody @Valid Kid kid) throws ListSEException{
         listSEService.getKids().addByPosition(kid, position);
         return new ResponseEntity<>(new ResponseDTO(200,
                 "The kid has been added in the position", null), HttpStatus.OK);
@@ -81,7 +84,7 @@ public class ListSEController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> addKid(@RequestBody KidDTO kidDTO) throws ListSEException{
+    public ResponseEntity<ResponseDTO> addKid(@RequestBody @Valid KidDTO kidDTO) throws ListSEException{
         City city = cityService.getCityByCode(kidDTO.getCodeCity());
         Boolean addKidDone = listSEService.getKids().addKidDone(new Kid(kidDTO.getIdentification(),
                 kidDTO.getName(), kidDTO.getAge(), kidDTO.getGender(), city));

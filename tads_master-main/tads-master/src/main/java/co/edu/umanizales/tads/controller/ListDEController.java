@@ -6,6 +6,7 @@ import co.edu.umanizales.tads.model.*;
 import co.edu.umanizales.tads.service.AgeRangeService;
 import co.edu.umanizales.tads.service.ListDEService;
 import co.edu.umanizales.tads.service.VetService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,20 +30,22 @@ public class ListDEController {
         return new ResponseEntity<>(new ResponseDTO(200,listDEService.getPets().getHead(),null), HttpStatus.OK);
     }
 
+    //Se insertan las excepciones únicamente donde vayamos a añadir mascotas
+
     @GetMapping(path="/add")
-    public ResponseEntity<ResponseDTO> addPet(@RequestBody Pet pet) throws ListDEException {
+    public ResponseEntity<ResponseDTO> addPet(@RequestBody @Valid Pet pet) throws ListDEException {
         listDEService.getPets().addPet(pet);
         return new ResponseEntity<>(new ResponseDTO(200, "The pet has been added", null), HttpStatus.OK);
     }
 
     @GetMapping(path="/addstart")
-    public ResponseEntity<ResponseDTO> addPetToStart(@RequestBody Pet pet) throws ListDEException{
+    public ResponseEntity<ResponseDTO> addPetToStart(@RequestBody @Valid Pet pet) throws ListDEException{
         listDEService.getPets().addPetToStart(pet);
         return new ResponseEntity<>(new ResponseDTO(200, "The pet has been added to start", null), HttpStatus.OK);
     }
 
     @GetMapping(path="/addposition")
-    public ResponseEntity<ResponseDTO> addPetByPosition(@PathVariable int position, @RequestBody Pet pet) throws ListDEException{
+    public ResponseEntity<ResponseDTO> addPetByPosition(@PathVariable int position, @RequestBody @Valid Pet pet) throws ListDEException{
         listDEService.getPets().addPetByPosition(pet, position);
         return new ResponseEntity<>(new ResponseDTO(200, "The pet has been added in the position", null), HttpStatus.OK);
     }
@@ -71,7 +74,7 @@ public class ListDEController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> addPet(@RequestBody PetDTO petDTO)throws ListDEException{
+    public ResponseEntity<ResponseDTO> addPet(@RequestBody @Valid PetDTO petDTO)throws ListDEException{
         Vet vet = vetService.getVetByCode(petDTO.getCodeVet());
         Boolean addPetDone = listDEService.getPets().addPetDone(new Pet(petDTO.getPetCode(),
                 petDTO.getPetName(), petDTO.getSpecie(), petDTO.getPetAge(), petDTO.getGender(), vet));
