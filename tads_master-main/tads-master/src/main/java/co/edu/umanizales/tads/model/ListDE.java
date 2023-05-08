@@ -14,22 +14,17 @@ public class ListDE {
     Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
     Entonces, al tener el nodo previo, debemos de conectar el nuevo nodo al nodo anterior
     */
-    public void addPet(Pet pet) throws ListDEException
-    {
-        if(this.head!=null)
-        {
+    public void addPet(Pet pet) throws ListDEException {
+        if (this.head != null) {
             NodeDE temp = this.head;
-            while(temp.getNext()!=null)
-            {
-                temp=temp.getNext();
+            while (temp.getNext() != null) {
+                temp = temp.getNext();
             }
-            NodeDE newPet= new NodeDE(pet);
+            NodeDE newPet = new NodeDE(pet);
             temp.setNext(newPet);
             newPet.setPrevious(temp);
-        }
-        else
-        {
-            this.head= new NodeDE(pet);
+        } else {
+            this.head = new NodeDE(pet);
         }
         size++;
     }
@@ -38,15 +33,13 @@ public class ListDE {
     Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
     Entonces, al tener el nodo previo, debemos de conectar el nodo siguiente a la cabeza con esta
     */
-    public void addPetToStart(Pet pet) throws ListDEException{
-        if(head !=null)
-        {
+    public void addPetToStart(Pet pet) throws ListDEException {
+        if (head != null) {
             NodeDE newNode = new NodeDE(pet);
             newNode.setNext(head);
             head.setPrevious(newNode);
             head = newNode;
-        }
-        else {
+        } else {
             head = new NodeDE(pet);
         }
         size++;
@@ -57,21 +50,21 @@ public class ListDE {
     Entonces, al tener el nodo previo, debemos de conectar el nuevo nodo al nodo anterior
     Y el siguiente nodo, al nodo nuevo
     */
-    public void addPetByPosition(Pet pet, int position) throws ListDEException{
+    public void addPetByPosition(Pet pet, int position) throws ListDEException {
         NodeDE newNode = new NodeDE(pet);
-        if (position == 0){
+        if (position == 0) {
             newNode.setNext(head);
-            if (head != null){
+            if (head != null) {
                 head.setPrevious(newNode);
             }
             head = newNode;
         } else {
             NodeDE temp = head;
-            for (int i = 0; i < position - 1; i++){
+            for (int i = 0; i < position - 1; i++) {
                 temp = temp.getNext();
             }
             newNode.setNext(temp.getNext());
-            if (temp.getNext()!=null){
+            if (temp.getNext() != null) {
                 temp.getNext().setPrevious(newNode);
             }
             temp.setNext(newNode);
@@ -84,7 +77,7 @@ public class ListDE {
     Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
     Conectamos el nodo previo del nodo que estaba después del nodo eliminado, al nodo que estaba antes del nodo eliminado
     */
-    public void deleteByPetCode (String petCode) throws ListDEException{
+    public void deleteByPetCode(String petCode) throws ListDEException {
         NodeDE temp = head;
         NodeDE prev = null;
 
@@ -93,15 +86,15 @@ public class ListDE {
             temp = temp.getNext();
         }
 
-        if(temp != null){
-            if (prev == null){
+        if (temp != null) {
+            if (prev == null) {
                 head = temp.getNext();
-                if (head != null){
+                if (head != null) {
                     head.setPrevious(null);
                 }
-            }else {
+            } else {
                 prev.setNext(temp.getNext());
-                if (temp.getNext() != null){
+                if (temp.getNext() != null) {
                     temp.getNext().setPrevious(prev);
                 }
             }
@@ -112,11 +105,11 @@ public class ListDE {
     /*LÓGICA MÉTODO INVERTIR:
     Usamos la misma lógica del código de listas SE. No se hace ningún cambio
     */
-    public void invertPets() throws ListDEException{
-        if(this.head != null){
+    public void invertPets() throws ListDEException {
+        if (this.head != null) {
             ListDE listCP = new ListDE();
             NodeDE temp = this.head;
-            while(temp != null){
+            while (temp != null) {
                 listCP.addPetToStart(temp.getData());
                 temp = temp.getNext();
             }
@@ -127,19 +120,18 @@ public class ListDE {
     /*LÓGICA MÉTODO PROMEDIO EDADES:
     Usamos la misma lógica del código de listas SE. No se realiza ningún cambio
     */
-    public float averageAgePets() throws ListDEException{
-        if (head != null){
+    public float averageAgePets() throws ListDEException {
+        if (head != null) {
             NodeDE temp = head;
             int contador = 0;
             int ages = 0;
-            while(temp.getNext() != null) {
+            while (temp.getNext() != null) {
                 contador++;
                 ages = ages + temp.getData().getPetAge();
                 temp = temp.getNext();
             }
-            return (float) ages/contador;
-        }
-        else{
+            return (float) ages / contador;
+        } else {
             return (float) 0;
         }
     }
@@ -147,10 +139,10 @@ public class ListDE {
     /*LÓGICA MÉTODO CAMBIAR EXTREMOS:
     Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
     */
-    public void changePetExtremes() throws ListDEException{
-        if(this.head !=null && this.head.getNext() !=null){
+    public void changePetExtremes() throws ListDEException {
+        if (this.head != null && this.head.getNext() != null) {
             NodeDE temp = this.head;
-            while(temp.getNext() != null){
+            while (temp.getNext() != null) {
                 temp = temp.getNext();
             }
             Pet copy = this.head.getData();
@@ -162,12 +154,12 @@ public class ListDE {
     /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN EL CÓDIGO DEL VETERINARIO:
     Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
     */
-    public int getCountPetsByVetCode(String code) throws ListDEException{
+    public int getCountPetsByVetCode(String code) throws ListDEException {
         int count = 0;
-        if(this.head != null){
+        if (this.head != null) {
             NodeDE temp = this.head;
-            while(temp != null){
-                if(temp.getData().getVet().getCode().equals(code)){
+            while (temp != null) {
+                if (temp.getData().getVet().getCode().equals(code)) {
                     count++;
                 }
                 temp = temp.getNext();
@@ -179,12 +171,12 @@ public class ListDE {
     /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN CÓDIGO DEL HOSPITAL:
     Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
     */
-    public int getCountPetsByHospitalCode(String code) throws ListDEException{
+    public int getCountPetsByHospitalCode(String code) throws ListDEException {
         int count = 0;
-        if (this.head != null){
+        if (this.head != null) {
             NodeDE temp = this.head;
-            while (temp != null){
-                if(temp.getData().getVet().getCode().substring(3, 3).equals(code)){
+            while (temp != null) {
+                if (temp.getData().getVet().getCode().substring(3, 3).equals(code)) {
                     count++;
                 }
                 temp = temp.getNext();
@@ -196,12 +188,12 @@ public class ListDE {
     /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN CÓDIGO DE LA TIENDA DE MASCOTAS:
     Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
     */
-    public int getCountPetsByStoreCode(String code) throws ListDEException{
+    public int getCountPetsByStoreCode(String code) throws ListDEException {
         int count = 0;
-        if (this.head != null){
+        if (this.head != null) {
             NodeDE temp = this.head;
-            while (temp != null){
-                if(temp.getData().getVet().getCode().substring(4, 4).equals(code)){
+            while (temp != null) {
+                if (temp.getData().getVet().getCode().substring(4, 4).equals(code)) {
                     count++;
                 }
                 temp = temp.getNext();
@@ -213,12 +205,12 @@ public class ListDE {
     /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN CÓDIGO DE LA TIENDA DE ARTÍCULOS DE MASCOTA:
     Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
     */
-    public int getCountPetsByStuffCode(String code) throws ListDEException{
+    public int getCountPetsByStuffCode(String code) throws ListDEException {
         int count = 0;
-        if (this.head != null){
+        if (this.head != null) {
             NodeDE temp = this.head;
-            while (temp != null){
-                if(temp.getData().getVet().getCode().substring(5, 5).equals(code)){
+            while (temp != null) {
+                if (temp.getData().getVet().getCode().substring(5, 5).equals(code)) {
                     count++;
                 }
                 temp = temp.getNext();
@@ -230,13 +222,13 @@ public class ListDE {
     /*LÓGICA MÉTODO REVISAR SI LA MASCOTA YA HA SIDO AÑADIDA:
     Usamos la misma lógica del código de listas SE. No se le hace ningún cambio
     */
-    public boolean addPetDone(Pet newPet) throws ListDEException{
+    public boolean addPetDone(Pet newPet) throws ListDEException {
         NodeDE temp = this.head;
-        while (temp != null){
+        while (temp != null) {
             Pet pet = temp.getData();
             if (pet.getPetCode().equals(newPet.getPetCode()) && pet.getPetName().equals(newPet.getPetName())
                     && pet.getPetAge() == newPet.getPetAge() && pet.getGender() == newPet.getGender()
-                    && pet.getVet().getCode().equals(newPet .getVet().getCode())){
+                    && pet.getVet().getCode().equals(newPet.getVet().getCode())) {
                 return true;
             }
             temp = temp.getNext();
@@ -248,23 +240,22 @@ public class ListDE {
     Usamos la misma lógica del código de listas SE. No se le hace ningún cambio. Solo que a este se le añade el nodo previo
     Conectamos el nodo previo del nodo que estaba después del nodo eliminado, al nodo que estaba antes del nodo eliminado
     */
-    public void deleteByPetAge (int age) throws ListDEException{
+    public void deleteByPetAge(int age) throws ListDEException {
         NodeDE temp = head;
         NodeDE prev = null;
-        while (temp != null && temp.getData().getPetAge() == age){
+        while (temp != null && temp.getData().getPetAge() == age) {
             prev = temp;
             temp = temp.getNext();
         }
-        if (temp != null){
-            if (prev == null){
+        if (temp != null) {
+            if (prev == null) {
                 head = temp.getNext();
-                if (head != null){
+                if (head != null) {
                     head.setPrevious(null);
                 }
-            }
-            else{
+            } else {
                 prev.setNext(temp.getNext());
-                if (temp.getNext() != null){
+                if (temp.getNext() != null) {
                     temp.getNext().setPrevious(prev);
                 }
             }
@@ -275,14 +266,14 @@ public class ListDE {
     /*LÓGICA MÉTODO ENVIAR AL FONDO POR LETRA:
     Usamos la misma lógica del código de listas SE.
      */
-    public void sendPetBottomByLetter(char initial) throws ListDEException{
+    public void sendPetBottomByLetter(char initial) throws ListDEException {
 
         //Creamos la lista copia
         ListDE sendBottom = new ListDE();
         NodeDE temp = this.head;
 
-        while (temp != null){
-            if (temp.getData().getPetName().charAt(0) != Character.toUpperCase(initial)){
+        while (temp != null) {
+            if (temp.getData().getPetName().charAt(0) != Character.toUpperCase(initial)) {
                 sendBottom.addPet(temp.getData());
             }
             temp = temp.getNext();
@@ -290,8 +281,8 @@ public class ListDE {
 
         temp = this.head;
 
-        while (temp != null){
-            if (temp.getData().getPetName().charAt(0) == Character.toUpperCase(initial)){
+        while (temp != null) {
+            if (temp.getData().getPetName().charAt(0) == Character.toUpperCase(initial)) {
                 sendBottom.addPet(temp.getData());
             }
             temp = temp.getNext();
@@ -303,19 +294,19 @@ public class ListDE {
     /*LÓGICA MÉTODO NIÑOS AL INICIO, NIÑAS AL FINAL:
     Usamos la misma lógica del código de listas SE.
      */
-    public void maleStartFemaleLast() throws ListDEException{
+    public void maleStartFemaleLast() throws ListDEException {
         ListDE listCopy = new ListDE();
         NodeDE temp = this.head;
-        while (temp != null){
-            if (temp.getData().getGender() == 'M'){
+        while (temp != null) {
+            if (temp.getData().getGender() == 'M') {
                 listCopy.addPet(temp.getData());
             }
             temp = temp.getNext();
         }
         temp = this.head;
 
-        while (temp != null){
-            if (temp.getData().getGender() == 'F'){
+        while (temp != null) {
+            if (temp.getData().getGender() == 'F') {
                 listCopy.addPet((temp.getData()));
             }
             temp = temp.getNext();
@@ -326,15 +317,15 @@ public class ListDE {
     /*LÓGICA MÉTODO NIÑO, LUEGO NIÑA:
     Usamos la misma lógica del código de listas SE.
      */
-    public void maleThenFemale() throws ListDEException{
+    public void maleThenFemale() throws ListDEException {
         ListDE listMale = new ListDE();
         ListDE listFemale = new ListDE();
         NodeDE temp = this.head;
-        while (temp != null){
-            if(temp.getData().getGender()=='M'){
+        while (temp != null) {
+            if (temp.getData().getGender() == 'M') {
                 listMale.addPet(temp.getData());
             }
-            if(temp.getData().getGender()=='F'){
+            if (temp.getData().getGender() == 'F') {
                 listFemale.addPet(temp.getData());
             }
             temp = temp.getNext();
@@ -344,12 +335,12 @@ public class ListDE {
         ListDE sortedList = new ListDE();
         NodeDE maleNode = listMale.getHead();
         NodeDE femaleNode = listFemale.getHead();
-        while (maleNode != null || femaleNode != null){
-            if (maleNode != null){
+        while (maleNode != null || femaleNode != null) {
+            if (maleNode != null) {
                 sortedList.addPet(maleNode.getData());
                 maleNode = maleNode.getNext();
             }
-            if (femaleNode != null){
+            if (femaleNode != null) {
                 sortedList.addPet(femaleNode.getData());
                 femaleNode = femaleNode.getNext();
             }
@@ -360,11 +351,11 @@ public class ListDE {
     /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN EL RANGO DE EDAD:
     Usamos la misma lógica del código de listas SE.
      */
-    public int getPetsAgeRange(int min, int max) throws ListDEException{
+    public int getPetsAgeRange(int min, int max) throws ListDEException {
         NodeDE temp = head;
-        int count=0;
-        while (temp != null){
-            if(temp.getData().getPetAge() >= min && temp.getData().getPetAge() <= max){
+        int count = 0;
+        while (temp != null) {
+            if (temp.getData().getPetAge() >= min && temp.getData().getPetAge() <= max) {
                 count++;
             }
             temp = temp.getNext();
@@ -375,11 +366,11 @@ public class ListDE {
     /*LÓGICA MÉTODO OBTENER MASCOTAS SEGÚN GÉNERO Y VERTINARIA:
     Usamos la misma lógica del código de listas SE.
      */
-    public void getReportPetsByVetGendersByAge(int age, ReportPetsVetGenderDTO report) throws ListDEException{
-        if (head!=null){
+    public void getReportPetsByVetGendersByAge(int age, ReportPetsVetGenderDTO report) throws ListDEException {
+        if (head != null) {
             NodeDE temp = this.head;
-            while (temp != null){
-                if(temp.getData().getPetAge()>age){
+            while (temp != null) {
+                if (temp.getData().getPetAge() > age) {
                     report.updateQuantityPets(temp.getData().getVet().getName(),
                             temp.getData().getGender());
                 }
@@ -392,36 +383,33 @@ public class ListDE {
     Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
     Entonces, al momento de adelantar la posición, es necesario que el nodo previo del siguiente nodo se conecte con él, y él se conecte con el del anterior nodo
     */
-    public void forwardPetPositions(String petCode, int positions) throws ListDEException{
-        if (head != null){
-            if(positions<size){
-                if(head.getData().getPetCode()==petCode){
+    public void forwardPetPositions(String petCode, int positions) throws ListDEException {
+        if (head != null) {
+            if (positions < size) {
+                if (head.getData().getPetCode() == petCode) {
                     //Como es la cabeza, entonces no puede subir posiciones
-                }
-                else{
+                } else {
                     int count = 1;
                     NodeDE temp = head;
-                    while(temp.getNext().getData().getPetCode()!=petCode){
+                    while (temp.getNext().getData().getPetCode() != petCode) {
                         temp = temp.getNext();
                         count++;
-                        if(temp.getNext()!=null){
+                        if (temp.getNext() != null) {
                             return;
                         }
                     }
-                    if (temp.getNext() != null){
+                    if (temp.getNext() != null) {
                         NodeDE temp2 = new NodeDE(temp.getNext().getData());
                         temp.getNext().getNext().setPrevious(temp);
                         temp.setNext(temp.getNext().getNext());
-                        if (positions >= count+1){
+                        if (positions >= count + 1) {
                             addPetToStart(temp2.getData());
-                        }
-                        else{
-                            addPetByPosition(temp2.getData(), (count+1) - positions);
+                        } else {
+                            addPetByPosition(temp2.getData(), (count + 1) - positions);
                         }
                     }
                 }
-            }
-            else{
+            } else {
                 return;
             }
         }
@@ -431,34 +419,81 @@ public class ListDE {
     Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
     Entonces, al momento de adelantar la posición, es necesario que el nodo previo del siguiente nodo se conecte con él, y él se conecte con el del anterior nodo
     */
-    public void afterwardsPetPositions(String petCode, int positions) throws ListDEException{
-        if (head!=null){
-            if(positions<size){
-                if(head.getData().getPetCode()==petCode){
+    public void afterwardsPetPositions(String petCode, int positions) throws ListDEException {
+        if (head != null) {
+            if (positions < size) {
+                if (head.getData().getPetCode() == petCode) {
                     NodeDE node = new NodeDE(head.getNext().getData());
-                    addPetByPosition(node.getData(), positions+1);
+                    addPetByPosition(node.getData(), positions + 1);
                     head = head.getNext();
-                }
-                else{
+                } else {
                     int count = 1;
                     NodeDE temp = head;
-                    while(temp.getNext().getData().getPetCode()!=petCode) {
+                    while (temp.getNext().getData().getPetCode() != petCode) {
                         temp = temp.getNext();
                         count++;
                         if (temp.getNext() != null) {
                             return;
                         }
                     }
-                    NodeDE temp2=new NodeDE(temp.getNext().getData());
+                    NodeDE temp2 = new NodeDE(temp.getNext().getData());
                     temp.setNext(temp.getNext().getNext());
-                    if (temp.getNext() != null){
+                    if (temp.getNext() != null) {
                         temp.getNext().setPrevious(temp);
                     }
-                    addPetByPosition(temp2.getData(), count+1+positions);
+                    addPetByPosition(temp2.getData(), count + 1 + positions);
                 }
-            }
-            else{
+            } else {
                 return;
+            }
+        }
+    }
+
+    //Eliminar en sitio
+
+    /*
+    LÓGICA ELIMINAR EN SITIO:
+    Entrada:
+    Usamos identificación como entrada, de esta forma podemos saber cual es el nodo que deseamos eliminar,
+    y así poder pararnos sobre este.
+    La lista tiene datos y su cabeza tiene los mismos datos de la entrada?
+    SI
+        Decimos que cabeza pase a ser el siguiente
+        Este siguiente posee un nodo?
+        SI
+        Decimos que su previo sea nulo. No conecte con nada
+    La lista tiene datos de entrada?
+    SI
+        Llamamos a un ayudante que se coloque en la cabeza
+        Recorremos la lista siempre y cuando hayan datos
+            Le decimos al ayudante que el anterior nodo se relacione con el nodo siguiente a donde está
+            Hay nodos después del nodo donde estamos?
+            SI
+                Decimos al ayudante que se posicione en donde están los datos, y que el siguiente se una con el anterior
+            NO
+                Decimos que el lazo siguiente al nodo anterior sea nulo, ya que al eliminar el último ya no hay datos
+    */
+
+    public void deleteKamikaze(String petCode) throws ListDEException{
+        if (this.head != null && this.head.getData().getPetCode() == petCode){
+            this.head = this.head.getNext();
+            if (this.head != null){
+                this.head.setPrevious(null);
+            }
+            size--;
+        }
+
+        if (this.head == null){
+            NodeDE temp = this.head;
+            while (temp != null && temp.getData().getPetCode() == petCode){
+                temp.getPrevious().setNext(temp.getNext());
+                if (temp.getNext() != null) {
+                    temp.getNext().setPrevious(temp.getPrevious());
+                }
+                else{
+                    temp.getNext().setNext(null);
+                }
+                size--;
             }
         }
     }

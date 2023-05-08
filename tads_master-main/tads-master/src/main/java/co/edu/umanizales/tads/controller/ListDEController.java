@@ -297,4 +297,15 @@ public class ListDEController {
             return new ResponseEntity<>(new ResponseDTO(400, "Error", null), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping(path="/deletekamikaze")
+    public ResponseEntity<ResponseDTO> deleteKamikaze(@PathVariable String petCode){
+        try{
+            listDEService.getPets().deleteKamikaze(petCode);
+            return new ResponseEntity<>(new ResponseDTO(200, "The pet has been deleted", null), HttpStatus.OK);
+        }
+        catch (ListDEException e) {
+            return new ResponseEntity<>(new ResponseDTO(400, "Error", null), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
