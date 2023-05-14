@@ -24,4 +24,6 @@ public class PetDTO {
     private char gender;
     @NotBlank(message = "This field couldn't be empty")
     private String codeVet;
+    @NotBlank(message = "This field couldn't be empty")
+    private boolean shower;
 }

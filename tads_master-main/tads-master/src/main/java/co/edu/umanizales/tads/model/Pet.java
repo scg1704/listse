@@ -24,4 +24,6 @@ public class Pet {
     private char gender;
     @NotBlank(message = "This field couldn't be empty")
     private Vet vet;
+    @NotBlank(message = "This field couldn't be empty")
+    private boolean shower;
 }
