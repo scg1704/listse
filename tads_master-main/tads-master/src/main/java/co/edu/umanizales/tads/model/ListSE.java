@@ -90,6 +90,7 @@ public class ListSE {
             newNode.setNext(temp.getNext());
             temp.setNext(newNode);
         }
+        size++;
     }
 
     /*LÓGICA MÉTODO ELIMINAR POR ID:
@@ -121,6 +122,7 @@ public class ListSE {
                 prev.setNext(temp.getNext());
             }
         }
+        size--;
     }
 
     /*LÓGICA MÉTODO INVERTIR:
@@ -251,33 +253,6 @@ public class ListSE {
         return count;
     }
 
-    /*LÓGICA MÉTODO CONTAR NIÑOS POR CÓDIGO LOCALIZACIÓN -CIUDAD:
-    Entrada:
-    Código de la localización
-    Creamos un contador
-    Tiene datos?
-    SI
-        Llamamos al ayudante
-        Le decimos que recorra la lista
-        El nodo donde está tiene el mismo código de ciudad al de entrada y tiene de 6 a 9 dígitos?
-        SI
-            Añadimos 1 al contador
-    Devolvemos los resultados del contador
-     */
-    public int getCountKidsByMunicipalCode(String code) throws ListSEException{
-        int count = 0;
-        if (this.head != null){
-            Node temp = this.head;
-            while (temp != null){
-                if(temp.getData().getCity().getCode().substring(6, 9).equals(code)){
-                    count++;
-                }
-                temp = temp.getNext();
-            }
-        }
-        return count;
-    }
-
     /*LÓGICA MÉTODO REVISAR SI EL NIÑO YA HA SIDO AÑADIDO:
     Entrada:
     Los datos del niño
@@ -329,6 +304,7 @@ public class ListSE {
                 prev.setNext(temp.getNext());
             }
         }
+        size--;
     }
 
     /*LÓGICA MÉTODO ELIMINAR AL FONDO SEGÚN LA LETRA:

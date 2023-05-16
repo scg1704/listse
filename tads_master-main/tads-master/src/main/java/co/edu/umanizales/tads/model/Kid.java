@@ -1,9 +1,6 @@
 package co.edu.umanizales.tads.model;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -12,17 +9,21 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 public class Kid {
+    @NotNull
     @NotBlank(message = "This field couldn't be empty")
     private String identification;
+    @NotNull
     @NotBlank(message = "This field couldn't be empty")
-    @Size(max = 50, message = "Name should be lower to 50 characters")
+    @Size(min = 1, max = 50, message = "Name should be lower to 50 characters")
     private String name;
 
-    @Min(value = 1)
-    @Max(value = 18)
+    @NotNull(message = "This field couldn't be empty")
+    @Positive
+    @Min(value = 1, message = "Minimum age should be higher than 0")
+    @Max(value = 18, message = "Maximum age should be lower or equal than 18")
     private int age;
-    @NotBlank(message = "This field couldn't be empty")
+    @NotNull(message = "This field couldn't be empty")
     private char gender;
-    @NotBlank(message = "This field couldn't be empty")
+    @NotNull(message = "This field couldn't be empty")
     private City city;
 }

@@ -30,12 +30,12 @@ public class ListSEController {
     @GetMapping
     public ResponseEntity<ResponseDTO> getKids(){
         return new ResponseEntity<>(new ResponseDTO(
-                200,listSEService.getKids().getHead(),null), HttpStatus.OK);
+                200,listSEService.getKids(),null), HttpStatus.OK);
     }
 
     //Se insertan las excepciones únicamente donde vayamos a añadir niños
 
-    @GetMapping(path="/add")
+    @PostMapping(path="/add")
     public ResponseEntity<ResponseDTO> add(@RequestBody @Valid Kid kid) throws ListSEException{
         try {
             if (kid == null){
@@ -50,7 +50,7 @@ public class ListSEController {
         }
     }
 
-    @GetMapping(path="/addstart")
+    @PostMapping(path="/addstart")
     public ResponseEntity<ResponseDTO> addToStart(@RequestBody @Valid Kid kid) {
         try{
             if (kid == null){
@@ -65,7 +65,7 @@ public class ListSEController {
         }
     }
 
-    @GetMapping(path="/addposition")
+    @PostMapping(path="/addposition/{position}")
     public ResponseEntity<ResponseDTO> addByPosition(@PathVariable int position, @RequestBody @Valid Kid kid) {
         try{
             if (kid == null){
@@ -92,7 +92,7 @@ public class ListSEController {
         }
     }
 
-    @GetMapping(path="/delete")
+    @GetMapping(path="/delete/{identification}")
     public ResponseEntity<ResponseDTO> deleteByIdentification(@PathVariable String identification) {
         try{
             listSEService.getKids().deleteByIdentification(identification);
@@ -165,23 +165,6 @@ public class ListSEController {
             List<KidsCityDTO> kidsCityDTOList=new ArrayList<>();
             for(City city: cityService.getCities()){
                 int count = listSEService.getKids().getCountKidsByDeptCode(city.getCode());
-                if(count > 0){
-                    kidsCityDTOList.add(new KidsCityDTO(city, count));
-                }
-            }
-            return new ResponseEntity<>(new ResponseDTO(200, kidsCityDTOList, null), HttpStatus.OK);
-        }
-        catch (ListSEException e){
-            return new ResponseEntity<>(new ResponseDTO(400, "Error", null), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping(path = "/kidsbymunicipal")
-    public ResponseEntity<ResponseDTO> getKidsByMunicipalCode() {
-        try{
-            List<KidsCityDTO> kidsCityDTOList=new ArrayList<>();
-            for(City city: cityService.getCities()){
-                int count = listSEService.getKids().getCountKidsByMunicipalCode(city.getCode());
                 if(count > 0){
                     kidsCityDTOList.add(new KidsCityDTO(city, count));
                 }
@@ -268,8 +251,8 @@ public class ListSEController {
         }
     }
 
-    @GetMapping(path="/forwardpositions")
-    public ResponseEntity<ResponseDTO> forwardPositions(@PathVariable String identification, int positions) {
+    @GetMapping(path="/forwardpositions/{identification}/{positions}")
+    public ResponseEntity<ResponseDTO> forwardPositions(@PathVariable String identification, @PathVariable int positions) {
         try{
             listSEService.getKids().forwardPositions(identification, positions);
             return new ResponseEntity<>(new ResponseDTO(200, "The kid has been moved to the position", null), HttpStatus.OK);
@@ -279,8 +262,8 @@ public class ListSEController {
         }
     }
 
-    @GetMapping(path="/afterwardspositions")
-    public ResponseEntity<ResponseDTO> afterwardsPositions(@PathVariable String identification, int positions)  {
+    @GetMapping(path="/afterwardspositions/{identification}/{positions}")
+    public ResponseEntity<ResponseDTO> afterwardsPositions(@PathVariable String identification, @PathVariable int positions)  {
         try{
             listSEService.getKids().afterwardsPositions(identification, positions);
             return new ResponseEntity<>(new ResponseDTO(200, "The kid has been moved to the position", null), HttpStatus.OK);

@@ -29,4 +29,9 @@ public class CityController {
     public ResponseEntity<ResponseDTO> getDepartments(){
         return new ResponseEntity<>(new ResponseDTO(200, cityService.getCitiesByCodeSize(5), null), HttpStatus.OK);
     }
+
+    @GetMapping(path="/municipals")
+    public ResponseEntity<ResponseDTO> getMunicipals(){
+        return new ResponseEntity<>(new ResponseDTO(200, cityService.getCitiesByCodeSize(8), null), HttpStatus.OK);
+    }
 }

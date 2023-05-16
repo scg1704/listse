@@ -19,7 +19,7 @@ public class CityService {
         cities.add(new City("16917", "Caldas"));
         cities.add(new City("16963", "Risaralda"));
         cities.add(new City("16905001", "Medellin"));
-        cities.add(new City("1693001", "Pereira"));
+        cities.add(new City("16963001", "Pereira"));
         cities.add(new City("16917001", "Manizales"));
         cities.add(new City("16917003", "Chinchiná"));
     }
