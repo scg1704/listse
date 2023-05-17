@@ -5,6 +5,9 @@ import co.edu.umanizales.tads.controller.dto.ReportPetsVetGenderDTO;
 import co.edu.umanizales.tads.exception.ListDEException;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class ListDE {
     private NodeDE head;

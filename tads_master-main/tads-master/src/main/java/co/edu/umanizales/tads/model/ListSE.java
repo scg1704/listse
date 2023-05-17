@@ -94,35 +94,35 @@ public class ListSE {
     }
 
     /*LÓGICA MÉTODO ELIMINAR POR ID:
-    Entrada: La identificación que nos dirá que niño eliminar
-    Llamamos dos ayudantes; Uno empezará desde la cabeza, y el otro actuará más tarde
-    Recorremos la lista parando con el ayudante en cada nodo
-        Tiene la misma identificación solicitada?
-        No
-            Seguimos recorriendo la lista
-        Si
-            Paramos ahí
-            La lista tiene datos?
-                SI
-                Llamamos al segundo ayudante para que lo elimine, y así se puedan un unir el nodo anterior, y el siguiente
+    Entrada: La edad que nos dirá que niños eliminar
+    Llamamos un ayudante que se va a posicionar en la cabeza
+    Creamos una lista copia
+    Creamos un boolean en caso de que encontremos a un niño con esa identificación
+    Recorremos la lista
+        No tiene la id?
+            Lo añadimos a una nueva lista
+        Tiene la id?
+            Decimos que si tiene esa id
+        Pasamos al siguiente
+    Pegamos la cabeza de la lista copia sin el de la id
      */
     public void deleteByIdentification (String identification) throws ListSEException{
         Node temp = head;
-        Node prev = null;
-
-        while (temp.getNext() != null && temp.getData().getIdentification() == identification) {
-            prev = temp;
+        ListSE listCopy = new ListSE();
+        boolean found = false;
+        while (temp != null){
+            if (temp.getData().getIdentification() != identification){
+                listCopy.add(temp.getData());
+            }
+            else{
+                found = true;
+                size--;
+            }
             temp = temp.getNext();
         }
-
-        if(temp != null){
-            if (prev == null){
-                head = temp.getNext();
-            }else {
-                prev.setNext(temp.getNext());
-            }
+        if (found) {
+            this.head = listCopy.getHead();
         }
-        size--;
     }
 
     /*LÓGICA MÉTODO INVERTIR:
@@ -278,33 +278,34 @@ public class ListSE {
 
     /*LÓGICA MÉTODO ELIMINAR POR EDAD:
     Entrada: La edad que nos dirá que niños eliminar
-    Llamamos dos ayudantes; Uno empezará desde la cabeza, y el otro actuará más tarde
-    Recorremos la lista parando con el ayudante en cada nodo
-        Tiene la misma edad solicitada?
-        No
-            Seguimos recorriendo la lista
-        Si
-            Paramos ahí
-            La lista tiene datos?
-                SI
-                Llamamos al segundo ayudante para que lo elimine, y así se puedan un unir el nodo anterior, y el siguiente
+    Llamamos un ayudante que se va a posicionar en la cabeza
+    Creamos una lista copia
+    Creamos un boolean en caso de que encontremos niños que tengan esa edad
+    Recorremos la lista
+        No tiene la edad?
+            Lo añadimos a una nueva lista
+        Tiene la edad?
+            Decimos que si tiene esa edad
+        Pasamos al siguiente
+    Pegamos la cabeza de la lista copia sin los de la edad
      */
     public void deleteByAge (int age) throws ListSEException{
         Node temp = head;
-        Node prev = null;
-        while (temp != null && temp.getData().getAge() == age){
-            prev = temp;
-            temp = temp.getNext();
-        }
-        if (temp != null){
-            if (prev == null){
-                head = temp.getNext();
+        ListSE listCopy = new ListSE();
+        boolean found = false;
+        while (temp != null){
+            if (temp.getData().getAge()!=age){
+                listCopy.add(temp.getData());
             }
             else{
-                prev.setNext(temp.getNext());
+                found = true;
+                size--;
             }
+            temp = temp.getNext();
         }
-        size--;
+        if (found) {
+            this.head = listCopy.getHead();
+        }
     }
 
     /*LÓGICA MÉTODO ELIMINAR AL FONDO SEGÚN LA LETRA:

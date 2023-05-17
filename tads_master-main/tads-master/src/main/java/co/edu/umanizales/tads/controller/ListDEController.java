@@ -126,11 +126,11 @@ public class ListDEController {
         try{
             listDEService.getPets().addPetDone(new Pet(petDTO.getPetCode(),
                     petDTO.getPetName(), petDTO.getSpecie(), petDTO.getPetAge(), petDTO.getGender(), vet, petDTO.isShower()));
-           }
+        }
         catch (ListDEException e) {
             return new ResponseEntity<>(new ResponseDTO(400, "Already exists", null), HttpStatus.BAD_REQUEST);
         }
-            return new ResponseEntity<>(new ResponseDTO(200, "Pet has been added", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDTO(200, "Pet has been added", null), HttpStatus.OK);
     }
 
     @GetMapping(path = "/petsbyvets")
