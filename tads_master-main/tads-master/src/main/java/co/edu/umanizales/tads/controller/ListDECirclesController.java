@@ -17,35 +17,56 @@ public class ListDECirclesController {
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getPets(){
-        return new ResponseEntity<>(new ResponseDTO(200,listDECirclesService.getPets().getHead(),
+        return new ResponseEntity<>(new ResponseDTO(200,listDECirclesService.getPets().print(),
                 null), HttpStatus.OK);
     }
 
-    @GetMapping(path="/add")
+    @PostMapping(path="/add")
     public ResponseEntity<ResponseDTO> addPet(@RequestBody Pet pet){
         listDECirclesService.getPets().addPet(pet);
         return new ResponseEntity<>(new ResponseDTO(200, "the pet has been added", null),
                 HttpStatus.OK);
     }
 
-    @GetMapping(path="/addstart")
+    @PostMapping(path="/addstart")
     public ResponseEntity<ResponseDTO> addPetStart(@RequestBody Pet pet){
         listDECirclesService.getPets().addPetStart(pet);
         return new ResponseEntity<>(new ResponseDTO(200, "the pet has been added", null),
                 HttpStatus.OK);
     }
 
-    @GetMapping(path="/addposition")
+    @PostMapping(path="/addposition/{position}")
     public ResponseEntity<ResponseDTO> addPetPosition(@PathVariable int position, @RequestBody Pet pet){
         listDECirclesService.getPets().addPetByPosition(pet, position);
         return new ResponseEntity<>(new ResponseDTO(200, "The pet has been added", null),
                 HttpStatus.OK);
     }
 
-    @GetMapping(path="/showerpet")
-    public ResponseEntity<ResponseDTO> showerPet(@PathVariable int position){
-        listDECirclesService.getPets().showerPet(position);
+    @GetMapping(path="/showerpetposition/{position}")
+    public ResponseEntity<ResponseDTO> showerPetPosition(@PathVariable int position){
+        listDECirclesService.getPets().showerByPosition(position);
         return new ResponseEntity<>(new ResponseDTO(200, "The pet is clean", null),
                 HttpStatus.OK);
+    }
+
+    @GetMapping(path="/takeshower/{direction}")
+    public ResponseEntity<ResponseDTO> takeShower(@PathVariable char direction){
+        int num;
+        char start = Character.toLowerCase(direction);
+        num = listDECirclesService.getPets().takeShower(direction);
+        if (num == 0) {
+            return new ResponseEntity<>(new ResponseDTO(409, "ERROR", null), HttpStatus.OK);
+        }
+        if (num == 1){
+            return new ResponseEntity<>(new ResponseDTO(200, "First pet was bathed", null), HttpStatus.OK);
+        }
+        else{
+            if (start == 'R'){
+                return new ResponseEntity<>(new ResponseDTO(200, "Pet number " + num + " was bathed", null), HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>(new ResponseDTO(200, "Pet number " + num + " was bathed", null), HttpStatus.OK);
+            }
+        }
     }
 }

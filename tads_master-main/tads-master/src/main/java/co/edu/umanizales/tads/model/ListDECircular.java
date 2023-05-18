@@ -3,10 +3,32 @@ package co.edu.umanizales.tads.model;
 import co.edu.umanizales.tads.exception.ListDEException;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 @Data
 public class ListDECircular {
     private NodeDE head;
     private int size;
+    private List<Pet> pets = new ArrayList<>();
+
+    /*
+    LÓGICA MÉTODO PRINT LISTA CIRCULAR
+    Llamamos a un ayudante y le decimos que se posicione en la cabeza
+    Le decimos que añada todos los pets que poseemos
+     */
+
+    public List <Pet> print (){
+        pets.clear();
+        NodeDE temp = head;
+        do{
+            pets.add(temp.getData());
+            temp = temp.getNext();
+        }
+        while (temp != head);
+        return pets;
+    }
 
     /*
     LÓGICA MÉTODO AÑADIR:
@@ -191,7 +213,7 @@ public class ListDECircular {
         Recorremos las posiciones hasta llegar a la anterior a la indicada
         Decimos que tome los datos del siguiente (Que es la posición indicada) y lo bañe
      */
-    public void showerPet (int position){
+    public void showerByPosition (int position){
         if (this.head != null){
             NodeDE temp = this.head;
             for (int i = 0; i < position -1; i++){
@@ -199,5 +221,78 @@ public class ListDECircular {
             }
             temp.getData().setShower(true);
         }
+    }
+
+    /*
+    LÓGICA MÉTODO TOMAR UNA DUCHA
+    Entrada:
+    Una dirección hacia la cual vamos a bañar a los animales
+    Llamamos un char que nos diga según que dirección arrancamos, y ponga la letra en minúscula
+    Llamamos un ayudante para que se posicione en la cabeza
+    La lista es nula?
+    SI
+        Decimos que no se puede hacer nada
+    La lista no empieza ni con los indicativos de derecha o izquierda?
+    SI
+        Decimos que es incorrecto
+    Llamamos a un nuúmero random
+    Llamamos a un entero que va a ser el equivalente al random +1
+    Si el número random es 1?
+        Decimos que tome los datos del nodo donde está
+        Decimos que sea cierto que lo bañó
+    El número random no es 1
+        Decimos que arranque un conteo desde el 1
+        Empieza por la derecha?
+        SI
+            Decimos que vaya al nodo indicado por derecha
+        NO
+            Decimos que vaya al nodo indicado por izquierda
+        Es el nodo que estamos buscando?
+        SI
+            Decimos que ese se bañó
+     */
+
+    public int takeShower (char direction){
+        char start = Character.toLowerCase(direction);
+        NodeDE temp = head;
+        if (temp == null){
+            return 0;
+        }
+        if (start != 'r' && start != 'l'){
+            return 0;
+        }
+        Random random = new Random();
+        int num = random.nextInt(size) + 1;
+        if (num == 1){
+            if (temp.getData().isShower()){
+                temp.getData().setShower(true);
+            }
+            else{
+                return 0;
+            }
+        }
+        else{
+            int count = 1;
+            if (start == 'r'){
+                while (count != num){
+                    temp = temp.getNext();
+                    count++;
+                }
+            }
+            else{
+                while (count != num){
+                    temp = temp.getPrevious();
+                    count++;
+                }
+            }
+
+            if (temp.getData().isShower()){
+                temp.getData().setShower(true);
+            }
+            else{
+                return 0;
+            }
+        }
+        return num;
     }
 }

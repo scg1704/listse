@@ -27,12 +27,12 @@ public class ListDEController {
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getPets(){
-        return new ResponseEntity<>(new ResponseDTO(200,listDEService.getPets().getHead(),null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDTO(200,listDEService.getPets().print(),null), HttpStatus.OK);
     }
 
     //Se insertan las excepciones únicamente donde vayamos a añadir mascotas
 
-    @GetMapping(path="/add")
+    @PostMapping(path="/add")
     public ResponseEntity<ResponseDTO> addPet(@RequestBody @Valid Pet pet) {
         try{
             if (pet == null){
@@ -46,7 +46,7 @@ public class ListDEController {
         }
     }
 
-    @GetMapping(path="/addstart")
+    @PostMapping(path="/addstart")
     public ResponseEntity<ResponseDTO> addPetToStart(@RequestBody @Valid Pet pet) {
         try{
             if (pet == null){
@@ -60,7 +60,7 @@ public class ListDEController {
         }
     }
 
-    @GetMapping(path="/addposition")
+    @PostMapping(path="/addposition/{position}")
     public ResponseEntity<ResponseDTO> addPetByPosition(@PathVariable int position, @RequestBody @Valid Pet pet) throws ListDEException{
         try{
             if (pet == null){
@@ -156,40 +156,6 @@ public class ListDEController {
             List<PetsVetDTO> petsVetDTOList=new ArrayList<>();
             for(Vet vet: vetService.getVets()){
                 int count = listDEService.getPets().getCountPetsByHospitalCode(vet.getCode());
-                if(count > 0){
-                    petsVetDTOList.add(new PetsVetDTO(vet, count));
-                }
-            }
-            return new ResponseEntity<>(new ResponseDTO(200, petsVetDTOList, null), HttpStatus.OK);
-        }
-        catch (ListDEException e) {
-            return new ResponseEntity<>(new ResponseDTO(400, "Error", null), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping(path = "/petsbystore")
-    public ResponseEntity<ResponseDTO> getPetsByStoreCode(){
-        try{
-            List<PetsVetDTO> petsVetDTOList=new ArrayList<>();
-            for(Vet vet: vetService.getVets()){
-                int count = listDEService.getPets().getCountPetsByStoreCode(vet.getCode());
-                if(count > 0){
-                    petsVetDTOList.add(new PetsVetDTO(vet, count));
-                }
-            }
-            return new ResponseEntity<>(new ResponseDTO(200, petsVetDTOList, null), HttpStatus.OK);
-        }
-        catch (ListDEException e) {
-            return new ResponseEntity<>(new ResponseDTO(400, "Error", null), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping(path = "/petsbystuff")
-    public ResponseEntity<ResponseDTO> getPetsByStuffCode(){
-        try{
-            List<PetsVetDTO> petsVetDTOList=new ArrayList<>();
-            for(Vet vet: vetService.getVets()){
-                int count = listDEService.getPets().getCountPetsByStuffCode(vet.getCode());
                 if(count > 0){
                     petsVetDTOList.add(new PetsVetDTO(vet, count));
                 }

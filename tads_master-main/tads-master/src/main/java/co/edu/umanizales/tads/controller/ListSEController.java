@@ -92,7 +92,7 @@ public class ListSEController {
         }
     }
 
-    @GetMapping(path="/delete/{identification}")
+    @GetMapping(path="/delete")
     public ResponseEntity<ResponseDTO> deleteByIdentification(@PathVariable String identification) {
         try{
             listSEService.getKids().deleteByIdentification(identification);

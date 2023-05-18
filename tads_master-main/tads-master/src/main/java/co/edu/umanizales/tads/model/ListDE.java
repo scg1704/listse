@@ -3,6 +3,7 @@ package co.edu.umanizales.tads.model;
 import co.edu.umanizales.tads.controller.dto.ReportKidsLocationGenderDTO;
 import co.edu.umanizales.tads.controller.dto.ReportPetsVetGenderDTO;
 import co.edu.umanizales.tads.exception.ListDEException;
+import co.edu.umanizales.tads.exception.ListSEException;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -12,6 +13,25 @@ import java.util.List;
 public class ListDE {
     private NodeDE head;
     private int size;
+    private List<Pet> pets = new ArrayList<>();
+
+    /*
+    LÓGICA MÉTODO PARA IMPRIMIR LA LISTA:
+    Llamamos a la lista de leds
+    Le decimos que si tiene elementos pase por toda la lista con ayuda de un temporal y los añada
+     */
+
+    public List <Pet> print (){
+        pets.clear();
+        if (head != null){
+            NodeDE temp = head;
+            while (temp != null){
+                pets.add(temp.getData());
+                temp =temp.getNext();
+            }
+        }
+        return pets;
+    }
 
     /*LÓGICA MÉTODO AÑADIR:
     Usamos la misma lógica del código de listas SE, solo que a este le añadimos el nodo previo
@@ -243,26 +263,22 @@ public class ListDE {
     Usamos la misma lógica del código de listas SE. No se le hace ningún cambio. Solo que a este se le añade el nodo previo
     Conectamos el nodo previo del nodo que estaba después del nodo eliminado, al nodo que estaba antes del nodo eliminado
     */
-    public void deleteByPetAge(int age) throws ListDEException {
+    public void deleteByPetAge (int age) throws ListDEException {
         NodeDE temp = head;
-        NodeDE prev = null;
-        while (temp != null && temp.getData().getPetAge() == age) {
-            prev = temp;
+        ListDE listCopy = new ListDE();
+        boolean found = false;
+        while (temp != null){
+            if (temp.getData().getPetAge()!=age){
+                listCopy.addPet(temp.getData());
+            }
+            else{
+                found = true;
+                size--;
+            }
             temp = temp.getNext();
         }
-        if (temp != null) {
-            if (prev == null) {
-                head = temp.getNext();
-                if (head != null) {
-                    head.setPrevious(null);
-                }
-            } else {
-                prev.setNext(temp.getNext());
-                if (temp.getNext() != null) {
-                    temp.getNext().setPrevious(prev);
-                }
-            }
-            size--;
+        if (found) {
+            this.head = listCopy.getHead();
         }
     }
 
