@@ -94,7 +94,7 @@ public class ListSE {
     }
 
     /*LÓGICA MÉTODO ELIMINAR POR ID:
-    Entrada: La edad que nos dirá que niños eliminar
+    Entrada: La identificación que nos dirá que niño eliminar
     Llamamos un ayudante que se va a posicionar en la cabeza
     Creamos una lista copia
     Creamos un boolean en caso de que encontremos a un niño con esa identificación
@@ -111,7 +111,7 @@ public class ListSE {
         ListSE listCopy = new ListSE();
         boolean found = false;
         while (temp != null){
-            if (temp.getData().getIdentification() != identification){
+            if (temp.getData().getIdentification().compareTo(identification)!=0){
                 listCopy.add(temp.getData());
             }
             else{
@@ -482,105 +482,78 @@ public class ListSE {
 
     /*LÓGICA MÉTODO ADELANTAR POSICIONES:
     Entrada:
-    Identificación del niño a cambiar de posición, y el número de posiciones que lo queremos cambiar
-    La lista tiene datos?
+    Identificación del niño a cambiar de posición, el número de posiciones que lo queremos cambiar, la lista de datos que poseemos
+    Llamamos a un ayudante para que se haga en la cabeza
+    Ponemos un contador en 1
+    Recorremos la lista, y mientras hayan datos comparamos y vamos pasando mientras la identificación del niño no coincida con la identificación solicitada
+        Pasamos al siguiente nodo
+        Lo añadimos al contador
+    Temporal tiene datos?
     SI
-        El tamaño es mayor a las posiciones a adelantar?
-            Es la cabeza?
-            SI
-                No puede adelantar posiciones
-            NO
-                Llamamos a un ayudante
-                Creamos un contador
-                Recorremos la lista
-                    La identificación es diferente a la del niño?
-                    SI
-                        Seguimos recorriendo la lista
-                        Aumentamos el contador
-               Llamamos a otro ayudante
-               Es mayor el número de posiciones al del conteo?
-               SI
-                Lo añadimos al inicio, como si fuera la cabeza
-               NO
-                Lo añadimos al contador restado al número de posiciones
+        Creamos una variable diff tipo int, que tendrá el conteo que fue hecho - las posiciones que pedimos
+        Obtenemos los datos del niño
+        Decimos que lo borre
+        La diff es mayor a 0?
+            Decimos que añada en posición al kid del que tomamos los datos, y la diferencia que ya fue establecida
+        Si no
+            Añadimos al inicio
+    Decimos que el niño no existe
      */
-    public void forwardPositions(String identification, int positions) throws ListSEException{
-        if (head != null){
-            if(positions<size){
-                if(head.getData().getIdentification()==identification){
-                    //Como es la cabeza, entonces no puede subir posiciones
-                }
-                else{
-                    int count = 1;
-                    Node temp = head;
-                    while(temp.getNext().getData().getIdentification()!=identification){
-                        temp = temp.getNext();
-                        count++;
-                        if(temp.getNext()!=null){
-                            return;
-                        }
-                    }
-                    Node temp2=new Node(temp.getNext().getData());
-                    temp.setNext(temp.getNext().getNext());
-                    if(positions >= count+1){
-                        addToStart(temp2.getData());
-                    }
-                    else{
-                        addByPosition(temp2.getData(), (count+1) - positions);
-                    }
-                }
+    public void forwardPositions(String identification, int positions, ListSE listSE) throws ListSEException {
+        Node temp = this.head;
+        int count = 1;
+        while (temp != null && temp.getData().getIdentification().compareTo(identification) != 0) {
+            temp = temp.getNext();
+            count++;
+        }
+        if (temp != null){
+            int diff = count - positions;
+            Kid kid = temp.getData();
+            listSE.deleteByIdentification(temp.getData().getIdentification());
+            if (diff > 0){
+                listSE.addByPosition(kid, diff);
             }
             else{
-                return;
+                addToStart(kid);
             }
+        }
+        else{
+            throw new ListSEException("Kid doesn't exists");
         }
     }
 
     /*LÓGICA MÉTODO RETROCEDER POSICIONES:
     Entrada:
     Identificación del niño a cambiar de posición, y el número de posiciones que lo queremos cambiar
-    La lista tiene datos?
+    Llamamos a un ayudante que se posicione en la cabeza
+    Creamos una variable tipo entero que empiece en 1
+    Recorremos la lista mientras hayan datos comparamos y vamos pasando mientras la identificación del niño no coincida con la identificación solicitada
+        Pasamos al siguiente nodo
+        Lo añadimos al contador
+    Creamos una variable suma que será la suma entre las posiciones de entrada, y el conteo realizado anteriormente
+    Tenemos datos?
     SI
-        El tamaño es mayor a las posiciones a adelantar?
-            Tiene la misma identificación?
-            SI
-                Creamos un nuevo nodo, y a partir de este vamos a obtener las posiciones que se pueden retroceder desde la cabeza
-            NO
-                Creamos un contador
-                Llamamos al ayudante
-                Recorremos la lista
-                La identificación es diferente?
-                SI
-                    Aumentamos el contador
-            Llamamos otro ayudante
-            Le decimos que añada en posición según el conteo más el número de posiciones
+        Obtenemos los datos del niño donde estamos
+        Eliminamos a ese niño
+        Añadimos por posición al niño, según la suma
+    SI NO
+        Decimos que el niño no existe
      */
-    public void afterwardsPositions(String identification, int positions) throws ListSEException{
-        if (head!=null){
-            if(positions<size){
-                if(head.getData().getIdentification()==identification){
-                    Node node = new Node(head.getNext().getData());
-                    addByPosition(node.getData(), positions+1);
-                    head = head.getNext();
-                }
-                else{
-                    int count = 1;
-                    Node temp = head;
-                    while(temp.getNext().getData().getIdentification()!=identification){
-                        temp = temp.getNext();
-                        count++;
-                        if(temp.getNext()!=null){
-                            return;
-                        }
-                    }
-                    Node temp2=new Node(temp.getNext().getData());
-                    temp.setNext(temp.getNext().getNext());
-                    addByPosition(temp2.getData(), count+1+positions);
-                }
-            }
-            else{
-                return;
-            }
+    public void afterwardsPositions(String identification, int positions) throws ListSEException {
+        Node temp = this.head;
+        int count = 1;
+        while (temp != null && temp.getData().getIdentification().compareTo(identification) != 0) {
+            temp = temp.getNext();
+            count++;
+        }
+        int sum = positions + count;
+        if (temp != null) {
+            Kid kid = temp.getData();
+            deleteByIdentification(temp.getData().getIdentification());
+            addByPosition(kid, sum);
+        }
+        else{
+            throw new ListSEException("Kid doesn't exists");
         }
     }
 

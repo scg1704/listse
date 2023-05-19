@@ -85,7 +85,7 @@ public class ListDEController {
         }
     }
 
-    @GetMapping(path="/delete")
+    @GetMapping(path="/delete/{petCode}")
     public ResponseEntity<ResponseDTO> deleteByPetCode(@PathVariable String petCode) {
         try{
             listDEService.getPets().deleteByPetCode(petCode);
@@ -242,10 +242,10 @@ public class ListDEController {
         }
     }
 
-    @GetMapping(path="/forwardpetpositions")
-    public ResponseEntity<ResponseDTO> forwardPetPositions(@PathVariable String petCode, int positions){
+    @GetMapping(path="/forwardpetpositions/{petCode}/{positions}")
+    public ResponseEntity<ResponseDTO> forwardPetPositions(@PathVariable String petCode, @PathVariable int positions){
         try{
-            listDEService.getPets().forwardPetPositions(petCode, positions);
+            listDEService.getPets().forwardPetPositions(petCode, positions, listDEService.getPets());
             return new ResponseEntity<>(new ResponseDTO(200, "The pet has been moved to the position", null), HttpStatus.OK);
         }
         catch (ListDEException e) {
@@ -253,8 +253,8 @@ public class ListDEController {
         }
     }
 
-    @GetMapping(path="/afterwardspetpositions")
-    public ResponseEntity<ResponseDTO> afterwardsPetPositions(@PathVariable String petCode, int positions){
+    @GetMapping(path="/afterwardspetpositions/{petCode}/{positions}")
+    public ResponseEntity<ResponseDTO> afterwardsPetPositions(@PathVariable String petCode, @PathVariable int positions){
         try{
             listDEService.getPets().afterwardsPetPositions(petCode, positions);
             return new ResponseEntity<>(new ResponseDTO(200, "The pet has been moved to the position", null), HttpStatus.OK);
@@ -264,7 +264,7 @@ public class ListDEController {
         }
     }
 
-    @GetMapping(path="/deletekamikaze")
+    @GetMapping(path="/deletekamikaze/{petCode}")
     public ResponseEntity<ResponseDTO> deleteKamikaze(@PathVariable String petCode){
         try{
             listDEService.getPets().deleteKamikaze(petCode);

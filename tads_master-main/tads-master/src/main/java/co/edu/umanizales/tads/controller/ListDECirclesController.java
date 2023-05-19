@@ -50,23 +50,9 @@ public class ListDECirclesController {
     }
 
     @GetMapping(path="/takeshower/{direction}")
-    public ResponseEntity<ResponseDTO> takeShower(@PathVariable char direction){
-        int num;
-        char start = Character.toLowerCase(direction);
-        num = listDECirclesService.getPets().takeShower(direction);
-        if (num == 0) {
-            return new ResponseEntity<>(new ResponseDTO(409, "ERROR", null), HttpStatus.OK);
-        }
-        if (num == 1){
-            return new ResponseEntity<>(new ResponseDTO(200, "First pet was bathed", null), HttpStatus.OK);
-        }
-        else{
-            if (start == 'R'){
-                return new ResponseEntity<>(new ResponseDTO(200, "Pet number " + num + " was bathed", null), HttpStatus.OK);
-            }
-            else{
-                return new ResponseEntity<>(new ResponseDTO(200, "Pet number " + num + " was bathed", null), HttpStatus.OK);
-            }
-        }
+    public ResponseEntity<ResponseDTO> takeShower(@PathVariable String direction){
+        listDECirclesService.getPets().takeShower(direction);
+        return new ResponseEntity<>(new ResponseDTO(200, "A random pet is clean", null),
+                HttpStatus.OK);
     }
 }

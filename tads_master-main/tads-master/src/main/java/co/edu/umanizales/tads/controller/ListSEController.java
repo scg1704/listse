@@ -92,7 +92,7 @@ public class ListSEController {
         }
     }
 
-    @GetMapping(path="/delete")
+    @GetMapping(path="/delete/{identification}")
     public ResponseEntity<ResponseDTO> deleteByIdentification(@PathVariable String identification) {
         try{
             listSEService.getKids().deleteByIdentification(identification);
@@ -254,8 +254,8 @@ public class ListSEController {
     @GetMapping(path="/forwardpositions/{identification}/{positions}")
     public ResponseEntity<ResponseDTO> forwardPositions(@PathVariable String identification, @PathVariable int positions) {
         try{
-            listSEService.getKids().forwardPositions(identification, positions);
-            return new ResponseEntity<>(new ResponseDTO(200, "The kid has been moved to the position", null), HttpStatus.OK);
+            listSEService.getKids().forwardPositions(identification, positions, listSEService.getKids());
+            return new ResponseEntity<>(new ResponseDTO(200, "The kid has been forwarded to the position", null), HttpStatus.OK);
         }
         catch (ListSEException e){
             return new ResponseEntity<>(new ResponseDTO(400, "Error", null), HttpStatus.BAD_REQUEST);
@@ -266,7 +266,7 @@ public class ListSEController {
     public ResponseEntity<ResponseDTO> afterwardsPositions(@PathVariable String identification, @PathVariable int positions)  {
         try{
             listSEService.getKids().afterwardsPositions(identification, positions);
-            return new ResponseEntity<>(new ResponseDTO(200, "The kid has been moved to the position", null), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseDTO(200, "The kid has lost positions", null), HttpStatus.OK);
         }
         catch (ListSEException e){
             return new ResponseEntity<>(new ResponseDTO(400, "Error", null), HttpStatus.BAD_REQUEST);

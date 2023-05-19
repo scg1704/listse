@@ -224,75 +224,63 @@ public class ListDECircular {
     }
 
     /*
-    LÓGICA MÉTODO TOMAR UNA DUCHA
+    LÓGICA MÉTODO TOMAR UNA DUCHA RANDOM
     Entrada:
     Una dirección hacia la cual vamos a bañar a los animales
-    Llamamos un char que nos diga según que dirección arrancamos, y ponga la letra en minúscula
-    Llamamos un ayudante para que se posicione en la cabeza
-    La lista es nula?
+
+    La cabeza está vacía?
+        Decimos que no hay nada
+    Obtenemos el tamaño de la lista y lo almacenamos en una variable
+    Creamos el random que nos va a dar el random
+    Decimos que el random va a ser un entero seleccionado al azar que va a ser del tamaño de la lista y no sea 0
+    Llamamos a un ayudante en la cabeza
+    Creamos un contador que empiece en 0
+    La dirección ingresada es l(left)?
     SI
-        Decimos que no se puede hacer nada
-    La lista no empieza ni con los indicativos de derecha o izquierda?
-    SI
-        Decimos que es incorrecto
-    Llamamos a un nuúmero random
-    Llamamos a un entero que va a ser el equivalente al random +1
-    Si el número random es 1?
-        Decimos que tome los datos del nodo donde está
-        Decimos que sea cierto que lo bañó
-    El número random no es 1
-        Decimos que arranque un conteo desde el 1
-        Empieza por la derecha?
-        SI
-            Decimos que vaya al nodo indicado por derecha
-        NO
-            Decimos que vaya al nodo indicado por izquierda
-        Es el nodo que estamos buscando?
-        SI
-            Decimos que ese se bañó
+        Decimos que se devuelva
+    Mientras el contador sea menor a la posición aleatoria
+        Si la dirección ingresada es r(right)
+            Recorre la lista por la derecha
+        Si no
+            Recorre la lista por la derecha
+        Se aumenta el contador
+    Actualizamos los nodos donde está el ayudante para saber si está o no bañado
+        El ayudante pasa por cada nodo para actualizar
+    Obtenemos los datos de la mascota con ayuda del ayudante
+    Si la mascota no ha sido bañado
+        Bañarla
      */
 
-    public int takeShower (char direction){
-        char start = Character.toLowerCase(direction);
-        NodeDE temp = head;
-        if (temp == null){
-            return 0;
+    public int takeShower (String direction) {
+        if (head == null) {
+            return -1;
         }
-        if (start != 'r' && start != 'l'){
-            return 0;
-        }
+        int size = getSize();
         Random random = new Random();
-        int num = random.nextInt(size) + 1;
-        if (num == 1){
-            if (temp.getData().isShower()){
-                temp.getData().setShower(true);
-            }
-            else{
-                return 0;
-            }
+        int randomPosition = random.nextInt(size) + 1;
+        NodeDE temp = head;
+        int cont = 1;
+        if (direction.compareTo("l") == 0) {
+            temp = head.getPrevious();
         }
-        else{
-            int count = 1;
-            if (start == 'r'){
-                while (count != num){
-                    temp = temp.getNext();
-                    count++;
-                }
+        while (cont < randomPosition) {
+            if (direction.compareTo("r") == 0) {
+                temp = temp.getNext();
             }
-            else{
-                while (count != num){
-                    temp = temp.getPrevious();
-                    count++;
-                }
+            else if (direction.compareTo("l") == 0) {
+                temp = temp.getPrevious();
             }
-
-            if (temp.getData().isShower()){
-                temp.getData().setShower(true);
-            }
-            else{
-                return 0;
-            }
+            cont++;
         }
-        return num;
+        if (direction.compareTo("l") == 0) {
+            temp = temp.getNext();
+        }
+        Pet pet = temp.getData();
+        if (!pet.isShower()) {
+            pet.setShower(true);
+            return randomPosition;
+        } else {
+            return 0;
+        }
     }
 }
