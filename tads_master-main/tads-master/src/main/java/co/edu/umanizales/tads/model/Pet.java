@@ -15,7 +15,7 @@ public class Pet {
     @Size(min = 1, max = 20, message = "Name should be lower to 20 characters")
     private String petName;
     @NotBlank(message = "This field couldn't be empty")
-    private String specie;
+    private Specie specie;
     @NotNull(message = "This field couldn't be empty")
     @Positive
     @Min(value = 1, message = "Minimum age should be higher than 0")

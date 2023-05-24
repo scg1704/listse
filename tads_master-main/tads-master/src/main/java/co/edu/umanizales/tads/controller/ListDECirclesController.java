@@ -1,9 +1,10 @@
 package co.edu.umanizales.tads.controller;
 
+import co.edu.umanizales.tads.controller.dto.ReportSpecieShowerDTO;
 import co.edu.umanizales.tads.controller.dto.ResponseDTO;
 import co.edu.umanizales.tads.model.Pet;
 import co.edu.umanizales.tads.service.ListDECirclesService;
-import co.edu.umanizales.tads.service.ListDEService;
+import co.edu.umanizales.tads.service.SpecieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class ListDECirclesController {
     @Autowired
     private ListDECirclesService listDECirclesService;
+
+    @Autowired
+    private SpecieService specieService;
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getPets(){
@@ -54,5 +58,11 @@ public class ListDECirclesController {
         listDECirclesService.getPets().takeShower(direction);
         return new ResponseEntity<>(new ResponseDTO(200, "A random pet is clean", null),
                 HttpStatus.OK);
+    }
+
+    @GetMapping(path="/petsshowerbyspecie")
+    public ResponseEntity<ResponseDTO> getReportPetsBySpecieShower(){
+        ReportSpecieShowerDTO report = listDECirclesService.getPets().getReportPetsBySpecieShower();
+        return new ResponseEntity<>(new ResponseDTO(200, report, null), HttpStatus.OK);
     }
 }

@@ -1,6 +1,6 @@
 package co.edu.umanizales.tads.model;
 
-import co.edu.umanizales.tads.exception.ListDEException;
+import co.edu.umanizales.tads.controller.dto.ReportSpecieShowerDTO;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -280,7 +280,45 @@ public class ListDECircular {
             pet.setShower(true);
             return randomPosition;
         } else {
-            return 0;
+            return -1;
         }
+    }
+
+    /*
+    Llamamos la lista de especies que poseemos
+    Recorremos la lista de mascotas
+        Obtenemos las especies
+            Agregamos las especies nuevas que vayamos encontrando
+    Creamos un objeto que nos va a armar el reporte según las especies
+    En este objeto vamos a actualizar la cantidad de especies que hay según se hayan bañado
+    Recorremos la lista de mascotas que poseemos
+        Decimos que debe de estar bañado
+        Si está bañado
+            Decimos que obtenga la especie y la muestre por su nombre
+            Creamos un entero que nos va a almacenar la cantidad actual que poseemos de la especie
+            Le sumamos 1 a esa cantidad que hay en tal caso de que sea de la misma especie, y esté bañado
+            Actualizamos el reporte mostrando la especie, y la cantidad que posee
+    Mostramos esto ya con todos los valores adquiridos
+     */
+
+    public ReportSpecieShowerDTO getReportPetsBySpecieShower(){
+        List<Specie> species = new ArrayList<>();
+        for (Pet pet : pets) {
+            Specie specie = pet.getSpecie();
+            if (!species.contains(specie)) {
+                species.add(specie);
+            }
+        }
+        ReportSpecieShowerDTO report = new ReportSpecieShowerDTO(species);
+        for (Pet pet : pets) {
+            boolean shower = pet.isShower();
+            if (shower) {
+                String specie = pet.getSpecie().getName();
+                int currentQuantity = report.getQuantityBySpecie(specie);
+                int updatedQuantity = currentQuantity + 1;
+                report.updateQuantitySpecies(specie, updatedQuantity);
+            }
+        }
+        return report;
     }
 }

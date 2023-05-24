@@ -1,5 +1,6 @@
 package co.edu.umanizales.tads.controller.dto;
 
+import co.edu.umanizales.tads.model.Specie;
 import co.edu.umanizales.tads.model.Vet;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class PetDTO {
     @Size(min = 1, max = 20, message = "Name should be lower to 20 characters")
     private String petName;
     @NotBlank(message = "This field couldn't be empty")
-    private String specie;
+    private Specie specie;
     @NotNull(message = "This field couldn't be empty")
     @Positive
     @Min(value = 1)
